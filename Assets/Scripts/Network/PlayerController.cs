@@ -67,13 +67,18 @@ namespace Network
             }
         }
 
-        /// <summary>
-        /// Runs every frame. Smoothly moves the visual toward the networked position
-        /// so proxies see fluid movement rather than tick-rate snapping.
-        /// </summary>
         public override void Render()
         {
-            transform.position = Vector3.Lerp(transform.position, NetworkPosition, 15f * Time.deltaTime);
+            // Use Fusion's snapshot interpolation for smooth tick-to-tick blending.
+            var interpolator = new NetworkBehaviourBufferInterpolator(this);
+            if (interpolator)
+            {
+                transform.position = interpolator.Vector3(nameof(NetworkPosition));
+            }
+            else
+            {
+                transform.position = NetworkPosition;
+            }
         }
     }
 }
