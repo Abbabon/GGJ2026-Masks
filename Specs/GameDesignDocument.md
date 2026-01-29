@@ -6,7 +6,7 @@ Asymmetric multiplayer game where one GOD player hunts heretic players who are h
 ## Platform Requirements
 - **Target Platform:** WebGL (must run in browser)
 - **Engine:** Unity
-- **Networking:** Must support WebGL builds (Photon Fusion or Mirror + SimpleWebTransport)
+- **Networking:** Must support WebGL builds (Photon Fusion)
 
 ## Player Roles
 
