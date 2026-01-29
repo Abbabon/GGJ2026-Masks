@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Game Design Document
+
+The core GDD is `god_is_a_dj_gdd.md` in the repo root. Consult it for game design details — mechanics, features, narrative, progression, and any design intent questions.
+
 ## Project Overview
 
 Unity 6 (version 6000.3.5f1) 2D **WebGL** game project for Global Game Jam 2026, themed "Masks". Target platform is WebGL — this constrains networking to WebSocket-based protocols (no UDP).
