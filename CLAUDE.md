@@ -17,6 +17,7 @@ This is a Unity project — open and run through Unity Editor (version 6000.3.5f
 ## Architecture
 
 - **Rendering:** Universal Render Pipeline 2D (URP 17.3.0) — configured in `Assets/Settings/Renderer2D.asset` and `Assets/Settings/UniversalRP.asset`
+- **Networking:** Photon Fusion 2 — see `Docs/PhotonFusion2.md` for full API reference
 - **Input:** New Input System (1.17.0) via `Assets/InputSystem_Actions.inputactions` — pre-configured Player action map with Move, Look, Attack, Interact (hold), Crouch, Jump, Sprint, Previous/Next for keyboard/mouse and gamepad
 - **Async:** UniTask (2.5.10) via OpenUPM scoped registry — prefer UniTask over coroutines for async code
 - **2D Tooling:** Sprite, Animation, Tilemap, SpriteShape, Aseprite/PSD importers available
@@ -28,3 +29,6 @@ This is a Unity project — open and run through Unity Editor (version 6000.3.5f
 - Editor-only scripts must be in `Editor/` folders to avoid build errors
 - Color space is **Linear** (not Gamma) — affects shader and texture work
 - Package dependencies managed in `Packages/manifest.json` (OpenUPM scoped registry for UniTask)
+- Networked objects use `Runner.Spawn()` — never `GameObject.Instantiate()` for networked prefabs
+- Use `[Networked]` auto-properties for synced state, RPCs for one-time cross-player events
+- Use `NetworkBool` instead of `bool` and `NetworkString<_N>` instead of `string` in networked properties
