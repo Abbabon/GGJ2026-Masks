@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] KeyCode actionKey = KeyCode.E;
     Human human;
+    bool actionPressedLastFrame;
 
     void Start()
     {
@@ -23,5 +25,12 @@ public class Player : MonoBehaviour
             human.Move(dir.normalized);
         else
             human.Stop();
+
+        bool actionPressed = Input.GetKey(actionKey);
+        if (actionPressed && !actionPressedLastFrame)
+            human.ActionStart();
+        else if (!actionPressed && actionPressedLastFrame)
+            human.ActionStop();
+        actionPressedLastFrame = actionPressed;
     }
 }
