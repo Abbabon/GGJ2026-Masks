@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Game Design Document
 
-The core GDD is `god_is_a_dj_gdd.md` in the repo root. Consult it for game design details — mechanics, features, narrative, progression, and any design intent questions.
+The core GDD is `Specs/GameDesignDocument.md`. Consult it for game design details — mechanics, features, narrative, progression, and any design intent questions.
 
 ## Project Overview
 
