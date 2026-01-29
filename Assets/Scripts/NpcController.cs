@@ -17,14 +17,8 @@ public class Npc : MonoBehaviour
     float moveTimer;
     float idleTimer;
     bool isIdle;
-
-    static readonly Vector2[] Directions = new Vector2[]
-    {
-        Vector2.up,
-        Vector2.down,
-        Vector2.left,
-        Vector2.right
-    };
+    Vector2 lastMoveDirection;
+    Vector2? excludedDirection;
 
     void Start()
     {
@@ -66,6 +60,7 @@ public class Npc : MonoBehaviour
         if (human == null) return;
 
         human.Stop();
+        excludedDirection = lastMoveDirection; // don't pick this direction again
         StartIdle();
     }
 
@@ -81,10 +76,30 @@ public class Npc : MonoBehaviour
         if (human == null) return;
 
         isIdle = false;
-        Vector2 dir = Directions[Random.Range(0, Directions.Length)];
+        Vector2 dir = PickDirectionExcluding(excludedDirection);
+        excludedDirection = null;
+        lastMoveDirection = dir;
         human.Move(dir);
 
         float duration = moveDurationSeconds + Random.Range(-moveDurationVariance, moveDurationVariance);
         moveTimer = Mathf.Max(0.01f, duration);
+    }
+
+    Vector2 PickDirectionExcluding(Vector2? exclude)
+    {
+        float angleDeg;
+        if (exclude == null)
+        {
+            angleDeg = Random.Range(0f, 360f);
+        }
+        else
+        {
+            Vector2 ex = exclude.Value.normalized;
+            float hitAngleDeg = Mathf.Atan2(ex.y, ex.x) * Mathf.Rad2Deg;
+            // Pick an angle at least 90° away from the hit direction (go sideways or opposite)
+            angleDeg = hitAngleDeg + 90f + Random.Range(0f, 180f);
+        }
+        float angleRad = angleDeg * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
     }
 }
