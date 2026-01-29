@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Unity 6 (version 6000.3.5f1) 2D game project for Global Game Jam 2026, themed "Masks".
+Unity 6 (version 6000.3.5f1) 2D **WebGL** game project for Global Game Jam 2026, themed "Masks". Target platform is WebGL — this constrains networking to WebSocket-based protocols (no UDP).
 
 ## Build & Run
 
@@ -22,6 +22,32 @@ This is a Unity project — open and run through Unity Editor (version 6000.3.5f
 - **Async:** UniTask (2.5.10) via OpenUPM scoped registry — prefer UniTask over coroutines for async code
 - **2D Tooling:** Sprite, Animation, Tilemap, SpriteShape, Aseprite/PSD importers available
 - **Scenes:** `Assets/Scenes/SampleScene.unity` is the main scene
+
+## Networking Layer
+
+The communication layer lives in `Assets/Scripts/Network/` and uses Photon Fusion 2 in **Shared Mode** (`GameMode.Shared`). Shared Mode is required for WebGL (no UDP — only WebSocket). Each player has state authority over objects they spawn; there is no single authoritative host.
+
+### Scripts
+
+- **`PlayerInputData.cs`** — `INetworkInput` struct (currently unused but kept for future Host/Client needs).
+- **`GameLauncher.cs`** — Session lifecycle manager (`MonoBehaviour` + `INetworkRunnerCallbacks`). Creates a `NetworkRunner`, starts the game in Shared Mode, spawns/despawns player prefabs on join/leave.
+- **`PlayerController.cs`** — `NetworkBehaviour` on the player prefab. Reads input directly (not via Fusion's input pipeline — that's for Host/Client mode). Uses `[Networked] Vector3 NetworkPosition` for replication and `Render()` with lerp for smooth interpolation on proxies.
+
+### Player Prefab Requirements
+
+The player prefab must have these components:
+- `NetworkObject` (network identity)
+- `PlayerController` (movement + position replication via `[Networked]` property)
+- `SpriteRenderer` (or other visual)
+- Assign `InputSystem_Actions` asset to PlayerController's Input Actions field
+
+Note: `NetworkTransform` is NOT needed — position replication is handled by the `[Networked]` property in PlayerController.
+
+### Adding New Networked Behaviour
+
+1. Add `[Networked]` auto-properties to `PlayerController` (or new `NetworkBehaviour` scripts)
+2. Guard writes with `if (HasStateAuthority)` — in Shared Mode each peer owns its own objects
+3. For one-time events across players, use `[Rpc]` methods
 
 ## Key Conventions
 
