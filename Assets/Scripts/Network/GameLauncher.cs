@@ -24,8 +24,10 @@ namespace Network
     public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     {
         [Header("Player Setup")]
-        [Tooltip("Prefab with NetworkObject, NetworkTransform, and PlayerController components.")]
+        [Tooltip("Prefab with NetworkObject, NetworkTransform, and PlayerController components. Can be set from GameManager.")]
         [SerializeField] private NetworkPrefabRef _playerPrefab;
+
+        public NetworkPrefabRef PlayerPrefab { get => _playerPrefab; set => _playerPrefab = value; }
 
         [Tooltip("World position where newly joined players spawn.")]
         [SerializeField] private Vector2 _spawnPoint = Vector2.zero;
@@ -56,6 +58,13 @@ namespace Network
             // Build NetworkSceneInfo from the active scene's build index.
             var sceneInfo = new NetworkSceneInfo();
             var buildIndex = SceneManager.GetActiveScene().buildIndex;
+            Debug.Log("--------------");
+            Debug.Log(buildIndex);
+            if (buildIndex > 2)
+            {
+                Debug.Log("Full room");
+                return;
+            }
             if (buildIndex >= 0)
             {
                 sceneInfo.AddSceneRef(SceneRef.FromIndex(buildIndex));

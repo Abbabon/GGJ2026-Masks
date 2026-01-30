@@ -289,17 +289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DebugOverlay
   _text: {fileID: 865279099}
   _updateInterval: 0.25
---- !u!114 &434457616 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3936659774716305969, guid: 20579adc9ed694889bfcd030d4fa938b, type: 3}
-  m_PrefabInstance: {fileID: 7229789330875961449}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44f1e91ddd29e402aaf7c7eaa2f95e5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Network.GameLauncher
 --- !u!1 &550018066
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +577,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _openingMenu: {fileID: 808065892}
-  _gameLauncher: {fileID: 434457616}
+  _playerPrefab:
+    RawGuidValue: 7bc6e662bf4c64032b55993344171313
 --- !u!1 &808065888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,6 +1766,10 @@ PrefabInstance:
     - target: {fileID: 8668749916130263385, guid: 20579adc9ed694889bfcd030d4fa938b, type: 3}
       propertyPath: m_Name
       value: GameLauncher
+      objectReference: {fileID: 0}
+    - target: {fileID: 8668749916130263385, guid: 20579adc9ed694889bfcd030d4fa938b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

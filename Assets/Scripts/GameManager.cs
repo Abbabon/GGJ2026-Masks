@@ -1,13 +1,15 @@
 using UnityEngine;
+using Fusion;
 using Network;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] OpeningMenu _openingMenu;
-    [SerializeField] GameLauncher _gameLauncher;
+    [Tooltip("Player prefab (NetworkObject). Assigned to the GameLauncher when starting a room.")]
+    [SerializeField] NetworkPrefabRef _playerPrefab;
 
     public OpeningMenu OpeningMenu { get => _openingMenu; set => _openingMenu = value; }
-    public GameLauncher GameLauncher { get => _gameLauncher; set => _gameLauncher = value; }
+    public NetworkPrefabRef PlayerPrefab { get => _playerPrefab; set => _playerPrefab = value; }
 
     void Start()
     {
@@ -17,11 +19,10 @@ public class GameManager : MonoBehaviour
 
     void OnStartedRoom(string roomName)
     {
-        if (_gameLauncher != null)
-        {
-            _gameLauncher.SessionName = roomName;
-            _gameLauncher.enabled = true;
-        }
+        var go = new GameObject("GameLauncher");
+        var launcher = go.AddComponent<GameLauncher>();
+        launcher.SessionName = roomName;
+        launcher.PlayerPrefab = _playerPrefab;
 
         if (_openingMenu != null)
             _openingMenu.gameObject.SetActive(false);
