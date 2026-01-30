@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,12 +13,28 @@ public class Actionable : MonoBehaviour
     bool actionCompletedThisHold;
     private Transform _fillScaler;
     private GameObject _fill;
+    private POILogic _poiLogic;
 
     void Start()
     {
         _fill = transform.Find("BarFill").gameObject;
         _fillScaler = transform.Find("BarFill/BarBG/BarFill_Container");
         _fill.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("POI"))
+        {
+            _poiLogic = other.gameObject.GetComponent<POILogic>();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("POI"))
+        {
+            _poiLogic = null;
+        }
     }
 
     public float ActionDurationSeconds
@@ -29,6 +46,11 @@ public class Actionable : MonoBehaviour
     /// <summary>Start the action (e.g. button pressed). Hold for ActionDurationSeconds to fire onActionComplete.</summary>
     public void ActionStart()
     {
+        if (_poiLogic == null || _poiLogic.isRuined)
+        {
+            Debug.Log("POI not in initial state");
+            return;
+        }
         _fill.SetActive(true);
         isActionActive = true;
         actionCompletedThisHold = false;
@@ -41,6 +63,7 @@ public class Actionable : MonoBehaviour
     {
         isActionActive = false;
         actionTimer = 0f;
+        _poiLogic = null;
         _fillScaler.localScale *= new Vector2(0, 1);
         actionCompletedThisHold = false;
         _fill.SetActive(false);
@@ -56,6 +79,11 @@ public class Actionable : MonoBehaviour
             _fillScaler.localScale = new Vector2(actionTimer / actionDurationSeconds, _fillScaler.localScale.y);
             if (actionTimer >= actionDurationSeconds && !actionCompletedThisHold)
             {
+                if (_poiLogic)
+                {
+                    _poiLogic.TriggerEffect();
+                }
+                
                 this.ActionStop();
                 onActionComplete?.Invoke();
             }
