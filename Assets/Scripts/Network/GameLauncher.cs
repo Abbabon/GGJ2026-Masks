@@ -80,9 +80,6 @@ namespace Network
                 sceneInfo.AddSceneRef(SceneRef.FromIndex(buildIndex));
             }
 
-            if (buildIndex <= 1)
-                onSelectCharacter?.Invoke();
-
             var result = await _runner.StartGame(new StartGameArgs
             {
                 GameMode     = GameMode.Shared,
@@ -94,6 +91,8 @@ namespace Network
             if (result.Ok)
             {
                 Debug.Log($"[GameLauncher] Fusion started. Mode: {_runner.GameMode}");
+                if (buildIndex <= 1)
+                    onSelectCharacter?.Invoke();
             }
             else
             {
