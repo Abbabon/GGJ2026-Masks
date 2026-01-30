@@ -30,14 +30,18 @@ public class Player : MonoBehaviour
         _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
     }
 
-    /// <summary>True if this object is the local Human (we control it and replicate to network).</summary>
+    /// <summary>True if we should control this character locally (input + Mover). When no network, always true for single-player. When networked, true only for the local Human.</summary>
     bool IsLocalHuman()
     {
         if (_runner == null) _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
         if (_lobbyState == null) _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
         if (_networkObject == null) _networkObject = GetComponent<NetworkObject>();
-        if (_runner == null || _lobbyState == null || _networkObject == null || !_lobbyState.Id.IsValid || !_lobbyState.GameStarted)
-            return false;
+
+        // No network (no runner, or no lobby, or game not started): control locally so single-player / editor works.
+        if (_runner == null || _lobbyState == null || !_lobbyState.Id.IsValid || !_lobbyState.GameStarted)
+            return true;
+        // Networked: only the local Human controls this object.
+        if (_networkObject == null) return true;
         if (_lobbyState.HumanPlayer != _runner.LocalPlayer) return false;
         if (!_runner.TryGetPlayerObject(_runner.LocalPlayer, out var myObj) || myObj != _networkObject) return false;
         return true;
