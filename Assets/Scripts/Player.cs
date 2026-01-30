@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     NetworkRunner _runner;
     LobbyState _lobbyState;
     NetworkObject _networkObject;
+    ReplicatedPosition _replicatedPosition;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
         if (actionable == null) actionable = GetComponentInChildren<Actionable>();
 
         _networkObject = GetComponent<NetworkObject>();
+        _replicatedPosition = GetComponent<ReplicatedPosition>();
         _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
         _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
     }
@@ -47,6 +49,17 @@ public class Player : MonoBehaviour
         return true;
     }
 
+    /// <summary>True if this object is the Human's object on the other client (we should apply shared position from network).</summary>
+    bool IsHumanProxy()
+    {
+        if (_runner == null || _lobbyState == null || _networkObject == null || !_lobbyState.Id.IsValid || !_lobbyState.GameStarted)
+            return false;
+        if (_lobbyState.HumanPlayer.IsNone) return false;
+        if (!_runner.TryGetPlayerObject(_lobbyState.HumanPlayer, out var humanObj) || humanObj != _networkObject)
+            return false;
+        return true;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (mover == null) return;
@@ -56,7 +69,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Only drive Mover when we are the local Human; otherwise transform comes from PlayerController.Render().
+        // When controlled by the other side (Human proxy), apply shared position to transform.
+        if (!IsLocalHuman() && IsHumanProxy())
+        {
+            if (_replicatedPosition != null && _replicatedPosition.Id.IsValid)
+                transform.position = _replicatedPosition.Position;
+            return;
+        }
+
+        // Only drive Mover when we are the local Human.
         if (!IsLocalHuman())
             return;
 
@@ -96,5 +117,14 @@ public class Player : MonoBehaviour
                 actionable.ActionStop();
             actionPressedLastFrame = actionPressed;
         }
+    }
+
+    void LateUpdate()
+    {
+        // When we are the local Human, push our position to the network so the other side (God) gets it. Run after physics so transform is up to date.
+        if (!IsLocalHuman()) return;
+        if (_replicatedPosition == null) _replicatedPosition = GetComponent<ReplicatedPosition>();
+        if (_replicatedPosition != null && _replicatedPosition.Id.IsValid)
+            _replicatedPosition.Position = transform.position;
     }
 }

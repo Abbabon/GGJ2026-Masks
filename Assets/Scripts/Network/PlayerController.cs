@@ -93,12 +93,9 @@ namespace Network
         {
             if (!HasStateAuthority) return;
 
-            // Human movement is driven by Player + Mover (Rigidbody); we only sync transform to network.
+            // Human movement and position sync are driven by Player.cs + ReplicatedPosition (no PlayerController reference).
             if (Role == RoleHuman)
-            {
-                NetworkPosition = transform.position;
                 return;
-            }
 
             // God does not move this character with input.
             if (Role == RoleGod) return;
@@ -112,11 +109,14 @@ namespace Network
 
         public override void Render()
         {
-            // Human movement is driven by Player + Mover (Rigidbody) on the local Human client; don't overwrite.
-            if (Role == RoleHuman && HasStateAuthority)
+            // Human position is updated by Player.cs from ReplicatedPosition; don't overwrite transform here.
+            if (Role == RoleHuman)
+            {
+                ApplyRoleVisualsIfChanged();
                 return;
+            }
 
-            // Use Fusion's snapshot interpolation for smooth tick-to-tick blending (proxies and non-Human).
+            // Use Fusion's snapshot interpolation for smooth tick-to-tick blending (God / non-Human proxies).
             var interpolator = new NetworkBehaviourBufferInterpolator(this);
             if (interpolator)
             {
@@ -127,7 +127,11 @@ namespace Network
                 transform.position = NetworkPosition;
             }
 
-            // Apply role name/tint when Role is set or replicated (no OnChanged in this Fusion version).
+            ApplyRoleVisualsIfChanged();
+        }
+
+        void ApplyRoleVisualsIfChanged()
+        {
             if (Role != _lastAppliedRole)
             {
                 _lastAppliedRole = Role;
