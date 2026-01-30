@@ -1,4 +1,5 @@
 using Fusion;
+using Network;
 using TMPro;
 using UnityEngine;
 
@@ -67,6 +68,22 @@ public class DebugOverlay : MonoBehaviour
         {
             var pos = localObj.transform.position;
             sb.AppendLine($"Pos: ({pos.x:F1}, {pos.y:F1})");
+        }
+
+        // Show local player role (God/Human) from LobbyState
+        var lobby = UnityEngine.Object.FindObjectOfType<LobbyState>();
+        if (lobby != null && lobby.Id.IsValid && lobby.GameStarted)
+        {
+            if (lobby.GodPlayer == runner.LocalPlayer)
+                sb.AppendLine("Role: God");
+            else if (lobby.HumanPlayer == runner.LocalPlayer)
+                sb.AppendLine("Role: Human");
+            else
+                sb.AppendLine("Role: —");
+        }
+        else
+        {
+            sb.AppendLine("Role: —");
         }
 
         return sb.ToString();

@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PhotonTesting.unity
     guid: 24e73d9f417194ffea68af67e1bbe8f0
+  - enabled: 1
+    path: Assets/Scenes/Merged scene.unity
+    guid: 145a5e890b5804846b4a870c728bb001
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
