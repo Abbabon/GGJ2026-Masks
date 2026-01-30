@@ -44,6 +44,11 @@ namespace Network
         /// </summary>
         [Networked] public byte Role { get; set; }
 
+        /// <summary>
+        /// World position of the God cursor (mouse). Written by the God player; replicated to all peers for GodCursor visuals.
+        /// </summary>
+        [Networked] public Vector3 GodCursorWorldPosition { get; set; }
+
         private InputAction _moveAction;
         private byte _lastAppliedRole = byte.MaxValue;
 
@@ -88,6 +93,13 @@ namespace Network
         {
             if (!HasStateAuthority) return;
 
+            // Human movement and position sync are driven by Player.cs + ReplicatedPosition (no PlayerController reference).
+            if (Role == RoleHuman)
+                return;
+
+            // God does not move this character with input.
+            if (Role == RoleGod) return;
+
             Vector2 dir = _moveAction.ReadValue<Vector2>();
             if (dir.sqrMagnitude > 0f)
             {
@@ -97,7 +109,14 @@ namespace Network
 
         public override void Render()
         {
-            // Use Fusion's snapshot interpolation for smooth tick-to-tick blending.
+            // Human position is updated by Player.cs from ReplicatedPosition; don't overwrite transform here.
+            if (Role == RoleHuman)
+            {
+                ApplyRoleVisualsIfChanged();
+                return;
+            }
+
+            // Use Fusion's snapshot interpolation for smooth tick-to-tick blending (God / non-Human proxies).
             var interpolator = new NetworkBehaviourBufferInterpolator(this);
             if (interpolator)
             {
@@ -108,7 +127,11 @@ namespace Network
                 transform.position = NetworkPosition;
             }
 
-            // Apply role name/tint when Role is set or replicated (no OnChanged in this Fusion version).
+            ApplyRoleVisualsIfChanged();
+        }
+
+        void ApplyRoleVisualsIfChanged()
+        {
             if (Role != _lastAppliedRole)
             {
                 _lastAppliedRole = Role;
