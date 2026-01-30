@@ -55,12 +55,12 @@ public class Npc : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (mover == null) return;
 
         mover.Stop();
-        excludedDirection = lastMoveDirection; // don't pick this direction again
+        excludedDirection = lastMoveDirection;
         StartIdle();
     }
 

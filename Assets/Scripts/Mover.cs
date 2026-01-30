@@ -1,51 +1,23 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
 {
-    [SerializeField] float defaultSpeed = 5f;
-    Vector2 moveDirection;
-    bool inMotion;
+    public float Speed = 2f;
+
     Rigidbody2D rb;
+    Vector2 moveDir;
+    bool moving;
 
-    public float Speed
-    {
-        get => defaultSpeed;
-        set => defaultSpeed = value;
-    }
+    void Awake() => rb = GetComponent<Rigidbody2D>();
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-            rb.bodyType = RigidbodyType2D.Kinematic;
-    }
-
-    public void Move(Vector2 direction)
-    {
-        moveDirection = direction.normalized;
-        inMotion = true;
-    }
-
-    public void Stop()
-    {
-        inMotion = false;
-    }
+    public void Move(Vector2 dir) { moveDir = dir.normalized; moving = true; }
+    public void Stop() { moving = false; moveDir = Vector2.zero; }
 
     void FixedUpdate()
     {
-        if (inMotion && rb != null)
-        {
-            Vector2 delta = moveDirection * defaultSpeed * Time.fixedDeltaTime;
-            rb.MovePosition(rb.position + delta);
-        }
-    }
-
-    void Update()
-    {
-        if (inMotion && rb == null)
-        {
-            Vector3 delta = new Vector3(moveDirection.x, moveDirection.y, 0f) * defaultSpeed * Time.deltaTime;
-            transform.position += delta;
-        }
+        if (!moving) return;
+        Vector2 next = rb.position + moveDir * Speed * Time.fixedDeltaTime;
+        rb.MovePosition(next);
     }
 }

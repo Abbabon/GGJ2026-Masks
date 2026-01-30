@@ -181,11 +181,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.11355305, y: 0}
+  m_Offset: {x: 0.039914608, y: 0.8867011}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -195,7 +195,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.314272, y: 1}
+  m_Size: {x: 11.12292, y: 2.7734022}
   m_EdgeRadius: 0
 --- !u!1 &253678834
 GameObject:
@@ -519,7 +519,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.0227108}
+  m_Offset: {x: 1.0572202, y: 0.0227108}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -529,7 +529,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 9.947962}
+  m_Size: {x: 3.1144404, y: 9.947962}
   m_EdgeRadius: 0
 --- !u!1 &1497476825
 GameObject:
@@ -597,7 +597,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.0227108}
+  m_Offset: {x: -1.1083764, y: 0.0227108}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -607,7 +607,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 9.947962}
+  m_Size: {x: 3.2167528, y: 9.947962}
   m_EdgeRadius: 0
 --- !u!1 &2108351263
 GameObject:
@@ -671,11 +671,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.11355305, y: 0}
+  m_Offset: {x: -0.21586514, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -685,7 +685,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.314272, y: 1}
+  m_Size: {x: 10.202114, y: 1}
   m_EdgeRadius: 0
 --- !u!1001 &2088030361759104116
 PrefabInstance:
@@ -851,6 +851,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3392698123584894683, guid: 4ea62e6f593cc4c48b84b19d59ca1282, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467271434378430504, guid: 4ea62e6f593cc4c48b84b19d59ca1282, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5017588554616331498, guid: 4ea62e6f593cc4c48b84b19d59ca1282, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
