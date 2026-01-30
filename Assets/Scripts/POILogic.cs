@@ -24,7 +24,7 @@ public class POILogic : MonoBehaviour
     [SerializeField] private float vfxLeadTime = 0.2f;
     [SerializeField] private float swapDelay = 0.4f;
 
-    private bool isRuined = false;
+    public bool isRuined = false;
     private bool isTransitioning = false;
 
     void Start()
@@ -32,10 +32,10 @@ public class POILogic : MonoBehaviour
         buildingBuilt.SetActive(true);
         buildingRuined.SetActive(false);
 
-        if (startMode == StartMode.AutoStart)
-        {
-            StartCoroutine(AutoStartRoutine());
-        }
+        // if (startMode == StartMode.AutoStart)
+        // {
+        //     StartCoroutine(AutoStartRoutine());
+        // }
     }
 
     private IEnumerator AutoStartRoutine()
@@ -52,6 +52,7 @@ public class POILogic : MonoBehaviour
         if (isRuined || isTransitioning)
             return;
 
+        Debug.unityLogger.Log("Triggering POI effect");
         StartCoroutine(TransitionRoutine());
     }
 
@@ -61,6 +62,7 @@ public class POILogic : MonoBehaviour
 
         // Safety: force particles to render on top
         var renderer = particleEffects.GetComponent<ParticleSystemRenderer>();
+        Debug.unityLogger.Log("-----");
         renderer.sortingLayerName = "Characters";
         renderer.sortingOrder = 10;
 

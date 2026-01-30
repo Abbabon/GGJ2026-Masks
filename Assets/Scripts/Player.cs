@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     NetworkObject _networkObject;
     ReplicatedPosition _replicatedPosition;
 
+
     void Start()
     {
         mover = GetComponent<Mover>();
@@ -30,6 +31,10 @@ public class Player : MonoBehaviour
         actionable = GetComponent<Actionable>();
         if (actionable == null) actionable = GetComponentInChildren<Actionable>();
 
+        actionable.onActionComplete.AddListener(() =>
+        {
+            Debug.Log("ActionComplete");
+        });
         _networkObject = GetComponent<NetworkObject>();
         _replicatedPosition = GetComponent<ReplicatedPosition>();
         _rb = GetComponent<Rigidbody2D>();
@@ -159,7 +164,10 @@ public class Player : MonoBehaviour
             if (actionPressed && !actionPressedLastFrame)
                 actionable.ActionStart();
             else if (!actionPressed && actionPressedLastFrame)
+            {
                 actionable.ActionStop();
+            }
+                
             actionPressedLastFrame = actionPressed;
         }
     }
