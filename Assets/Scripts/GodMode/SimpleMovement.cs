@@ -13,9 +13,17 @@ namespace GodMode
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
+            
+            // Add deadzone to filter noise
+            if (Mathf.Abs(h) < 0.1f) h = 0f;
+            if (Mathf.Abs(v) < 0.1f) v = 0f;
+            
             Vector3 dir = new Vector3(h, v, 0).normalized;
 
-            transform.position += dir * _speed * Time.deltaTime;
+            if (dir.magnitude > 0) // Only move if there's actual input
+            {
+                transform.position += dir * _speed * Time.deltaTime;
+            }
         }
     }
 }
