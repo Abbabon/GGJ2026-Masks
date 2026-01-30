@@ -389,7 +389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.78}
   m_SizeDelta: {x: 8, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4607443067747928273
@@ -506,6 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b25f97e205e43e9ab032bb8c29391b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterHUD_GodDirection
+  irisFillAmount: 0.075
 --- !u!1 &5489387854325769182
 GameObject:
   m_ObjectHideFlags: 0
