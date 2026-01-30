@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 864027540316003545}
   - component: {fileID: 5771433700766671148}
   m_Layer: 0
-  m_Name: new_assets2_3
+  m_Name: Mask_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
