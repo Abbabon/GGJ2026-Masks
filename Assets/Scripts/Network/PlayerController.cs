@@ -18,6 +18,10 @@ namespace Network
     /// </summary>
     public class PlayerController : NetworkBehaviour
     {
+        public const byte RoleNone = 0;
+        public const byte RoleGod = 1;
+        public const byte RoleHuman = 2;
+
         [Header("Movement")]
         [Tooltip("Movement speed in units per second.")]
         [SerializeField] private float _moveSpeed = 5f;
@@ -26,12 +30,35 @@ namespace Network
         [Tooltip("Drag the InputSystem_Actions asset here.")]
         [SerializeField] private InputActionAsset _inputActions;
 
+        [Header("Visual (Human tint)")]
+        [Tooltip("Tint applied to sprite when role is Human. Ignored if no SpriteRenderer.")]
+        [SerializeField] private Color _humanTint = new Color(0.85f, 0.75f, 0.65f, 1f);
+
         /// <summary>
         /// Networked position — Fusion replicates this to all peers automatically.
         /// </summary>
         [Networked] public Vector3 NetworkPosition { get; set; }
 
+        /// <summary>
+        /// Role assigned when game starts from lobby: RoleNone (0), RoleGod (1), RoleHuman (2).
+        /// </summary>
+        [Networked] public byte Role { get; set; }
+
         private InputAction _moveAction;
+        private byte _lastAppliedRole = byte.MaxValue;
+
+        void ApplyRoleVisuals()
+        {
+            if (Role == RoleGod)
+                gameObject.name = "God";
+            else if (Role == RoleHuman)
+            {
+                gameObject.name = "Human";
+                var sr = GetComponent<SpriteRenderer>();
+                if (sr != null)
+                    sr.color = _humanTint;
+            }
+        }
 
         public override void Spawned()
         {
@@ -45,6 +72,7 @@ namespace Network
 
             // Sync visual position for all peers on spawn.
             transform.position = NetworkPosition;
+            _lastAppliedRole = byte.MaxValue;
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -78,6 +106,13 @@ namespace Network
             else
             {
                 transform.position = NetworkPosition;
+            }
+
+            // Apply role name/tint when Role is set or replicated (no OnChanged in this Fusion version).
+            if (Role != _lastAppliedRole)
+            {
+                _lastAppliedRole = Role;
+                ApplyRoleVisuals();
             }
         }
     }

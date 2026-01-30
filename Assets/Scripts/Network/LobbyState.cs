@@ -12,6 +12,7 @@ namespace Network
     {
         [Networked] public PlayerRef GodPlayer { get; set; }
         [Networked] public PlayerRef HumanPlayer { get; set; }
+        [Networked] public NetworkBool GameStarted { get; set; }
 
         public bool BothSelected => !GodPlayer.IsNone && !HumanPlayer.IsNone;
 
@@ -43,6 +44,13 @@ namespace Network
         {
             if (HumanPlayer.IsNone)
                 HumanPlayer = player;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_StartGame()
+        {
+            if (BothSelected)
+                GameStarted = true;
         }
     }
 }

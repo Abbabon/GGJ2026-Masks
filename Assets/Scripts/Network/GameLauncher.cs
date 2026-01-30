@@ -48,6 +48,7 @@ namespace Network
         public UnityEvent onSelectCharacter = new UnityEvent();
 
         private NetworkRunner _runner;
+        private bool _playerSpawned;
 
         private async void Start()
         {
@@ -100,24 +101,54 @@ namespace Network
             }
         }
 
+        private void Update()
+        {
+            // When lobby signals game start, spawn local player (both peers see GameStarted after replication).
+            if (_runner != null && !_playerSpawned)
+                TrySpawnPlayerFromLobby();
+        }
+
+        /// <summary>
+        /// Called when user clicks Start in the select character menu. Triggers RPC so both peers spawn.
+        /// </summary>
+        public void NotifyStartGame()
+        {
+            var lobby = UnityEngine.Object.FindObjectOfType<LobbyState>();
+            if (lobby == null || !lobby.Id.IsValid) return;
+            if (!lobby.BothSelected) return;
+            lobby.RPC_StartGame();
+            TrySpawnPlayerFromLobby();
+        }
+
+        private void TrySpawnPlayerFromLobby()
+        {
+            if (_runner == null || _playerSpawned || !_playerPrefab.IsValid) return;
+
+            var lobby = UnityEngine.Object.FindObjectOfType<LobbyState>();
+            if (lobby == null || !lobby.Id.IsValid) return;
+            if (!lobby.GameStarted) return;
+
+            var local = _runner.LocalPlayer;
+            if (lobby.GodPlayer != local && lobby.HumanPlayer != local) return;
+
+            byte role = lobby.GodPlayer == local ? PlayerController.RoleGod : PlayerController.RoleHuman;
+            Vector3 spawnPos = new Vector3(_spawnPoint.x, _spawnPoint.y, 0f);
+            NetworkObject playerObject = _runner.Spawn(_playerPrefab, spawnPos, Quaternion.identity, local);
+            var pc = playerObject.GetComponent<PlayerController>();
+            if (pc != null)
+                pc.Role = role;
+            _runner.SetPlayerObject(local, playerObject);
+            _playerSpawned = true;
+            Debug.Log($"[GameLauncher] Spawned local player as {(role == PlayerController.RoleGod ? "God" : "Human")}");
+        }
+
         // =========================================================================
         // INetworkRunnerCallbacks — Session lifecycle
         // =========================================================================
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            // In Shared Mode, each peer spawns their own player object.
-            if (player != runner.LocalPlayer) return;
-
-            Vector3 spawnPos = new Vector3(_spawnPoint.x, _spawnPoint.y, 0f);
-            NetworkObject playerObject = runner.Spawn(
-                _playerPrefab,
-                spawnPos,
-                Quaternion.identity,
-                player // this peer gets StateAuthority over its own object
-            );
-            runner.SetPlayerObject(player, playerObject);
-            Debug.Log($"[GameLauncher] Spawned local player for {player}");
+            // Players are spawned when Start is clicked in select character menu (NotifyStartGame / TrySpawnPlayerFromLobby).
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

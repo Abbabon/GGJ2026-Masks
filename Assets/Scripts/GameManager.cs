@@ -17,6 +17,17 @@ public class GameManager : MonoBehaviour
     {
         if (_openingMenu != null)
             _openingMenu.startedRoom.AddListener(OnStartedRoom);
+        if (_selectCharacterMenu != null)
+            _selectCharacterMenu.onBothSelected.AddListener(OnStartGame);
+    }
+
+    void OnStartGame()
+    {
+        var launcher = FindObjectOfType<GameLauncher>();
+        if (launcher != null)
+            launcher.NotifyStartGame();
+        if (_selectCharacterMenu != null)
+            _selectCharacterMenu.gameObject.SetActive(false);
     }
 
     void OnStartedRoom(string roomName)
