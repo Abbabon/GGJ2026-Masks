@@ -185,7 +185,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.039914608, y: 0.8867011}
+  m_Offset: {x: 0.09293318, y: 0.8867011}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -195,7 +195,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 11.12292, y: 2.7734022}
+  m_Size: {x: 20.878326, y: 2.7734022}
   m_EdgeRadius: 0
 --- !u!1 &253678834
 GameObject:
@@ -479,7 +479,7 @@ Transform:
   m_GameObject: {fileID: 1260887116}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.27, y: 0, z: 0}
+  m_LocalPosition: {x: 9.37, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -557,7 +557,7 @@ Transform:
   m_GameObject: {fileID: 1497476825}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.36, y: 0, z: 0}
+  m_LocalPosition: {x: -9.4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -675,7 +675,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.21586514, y: 0}
+  m_Offset: {x: 0.15526485, y: -0.68924046}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -685,7 +685,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 10.202114, y: 1}
+  m_Size: {x: 21.972223, y: 2.378481}
   m_EdgeRadius: 0
 --- !u!1001 &2088030361759104116
 PrefabInstance:
@@ -697,11 +697,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4556742100245009731, guid: a5afd71063c9849c09b9e393bf3fd8f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.28
+      value: 1.84
       objectReference: {fileID: 0}
     - target: {fileID: 4556742100245009731, guid: a5afd71063c9849c09b9e393bf3fd8f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9
+      value: 1.95
       objectReference: {fileID: 0}
     - target: {fileID: 4556742100245009731, guid: a5afd71063c9849c09b9e393bf3fd8f1, type: 3}
       propertyPath: m_LocalPosition.z
