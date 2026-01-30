@@ -52,6 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   actionKey: 101
   blockedDirectionDotThreshold: 0.7
+  pointOfInterestPrefab: {fileID: 3876020004934453582, guid: 88f0f6e5933c4407dbd80a7c6bca82ce, type: 3}
+  godPositionPrefab: {fileID: 8848087171198101147, guid: 1f76a06649f3d46099cd15965414aa8b, type: 3}
 --- !u!61 &6807614948086243828
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,6 +5,9 @@ public class Player : MonoBehaviour
     [SerializeField] KeyCode actionKey = KeyCode.E;
     [Tooltip("Input in this direction is ignored after hitting a trigger until player chooses another direction.")]
     [SerializeField] float blockedDirectionDotThreshold = 0.7f;
+    [SerializeField] GameObject pointOfInterestPrefab;
+    [SerializeField] GameObject godPositionPrefab;
+
     Mover mover;
     Actionable actionable;
     bool actionPressedLastFrame;
@@ -18,6 +21,39 @@ public class Player : MonoBehaviour
 
         actionable = GetComponent<Actionable>();
         if (actionable == null) actionable = GetComponentInChildren<Actionable>();
+
+        if (godPositionPrefab != null) {
+            var godPositions = FindObjectsOfType<GodPosition>();
+            foreach (var godPosition in godPositions)
+            {
+                var indicator = Instantiate(godPositionPrefab, transform.position, Quaternion.identity);
+
+                // Using combined TargetIndicator script
+                var targetInd = indicator.GetComponent<GodMode.TargetIndicator>();
+                if (targetInd != null)
+                {
+                    targetInd.Source = this.transform;
+                    targetInd.Target = godPosition.transform;
+                }
+            }
+        }
+
+        if (pointOfInterestPrefab != null)
+        {
+            var pois = FindObjectsOfType<PointsOfInterest>();
+            foreach (var poi in pois)
+            {
+                var indicator = Instantiate(pointOfInterestPrefab, transform.position, Quaternion.identity);
+
+                // Using combined TargetIndicator script
+                var targetInd = indicator.GetComponent<GodMode.TargetIndicator>();
+                if (targetInd != null)
+                {
+                    targetInd.Source = this.transform;
+                    targetInd.Target = poi.transform;
+                }
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
