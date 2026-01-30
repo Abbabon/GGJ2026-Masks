@@ -34,6 +34,9 @@ namespace Network
         [Tooltip("Photon session/room name. All players must use the same name to connect.")]
         [SerializeField] private string _sessionName = "default-room";
 
+        /// <summary>Session/room name used when starting the game. Set before enabling this GameObject if using a menu flow.</summary>
+        public string SessionName { get => _sessionName; set => _sessionName = value ?? ""; }
+
         private NetworkRunner _runner;
 
         private async void Start()
