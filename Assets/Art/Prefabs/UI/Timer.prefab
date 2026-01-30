@@ -120,10 +120,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "01:59\x03"
+  m_text: 01:35
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f36eb663159d94711b87c6e8f9498837, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 55bb9255e280643ec9cb60096d37a078, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4dcc80b1e40734cdbad1ff97d4541876, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 79dfb702ad58b49659edf705fcc1b187, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

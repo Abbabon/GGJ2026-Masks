@@ -33,6 +33,14 @@ namespace Network
         [Tooltip("World position where newly joined players spawn.")]
         [SerializeField] private Vector2 _spawnPoint = Vector2.zero;
 
+        [Header("NPC (optional)")]
+        [Tooltip("NPC prefab (NetworkObject + ReplicatedPosition + Npc). If set, the Human spawns these so the Human has state authority and SENDs positions; God GETs.")]
+        [SerializeField] private NetworkPrefabRef _npcPrefab;
+        [Tooltip("How many NPCs to spawn when the Human starts (only if _npcPrefab is set).")]
+        [SerializeField] private int _npcSpawnCount = 0;
+        [Tooltip("Offset per NPC from _spawnPoint (e.g. (2,0) so NPCs spawn in a row).")]
+        [SerializeField] private Vector2 _npcSpawnOffset = new Vector2(2f, 0f);
+
         [Header("Session")]
         [Tooltip("Photon session/room name. All players must use the same name to connect.")]
         [SerializeField] private string _sessionName = "default-room";
@@ -139,6 +147,18 @@ namespace Network
                 pc.Role = role;
             _runner.SetPlayerObject(local, playerObject);
             _playerSpawned = true;
+
+            // Human spawns NPCs so the Human has state authority over them (Human SENDs positions, God GETs).
+            if (role == PlayerController.RoleHuman && _npcPrefab.IsValid && _npcSpawnCount > 0)
+            {
+                for (int i = 0; i < _npcSpawnCount; i++)
+                {
+                    Vector3 npcPos = new Vector3(_spawnPoint.x + _npcSpawnOffset.x * (i + 1), _spawnPoint.y + _npcSpawnOffset.y * (i + 1), 0f);
+                    _runner.Spawn(_npcPrefab, npcPos, Quaternion.identity, local);
+                }
+                Debug.Log($"[GameLauncher] Spawned {_npcSpawnCount} NPC(s) (Human has authority).");
+            }
+
             // Hide select character menu on this client so both clients see the game start (clicker hides in GameManager.OnStartGame; other peer hides here).
             var menu = UnityEngine.Object.FindObjectOfType<SelectCharacterMenu>();
             if (menu != null) menu.gameObject.SetActive(false);
