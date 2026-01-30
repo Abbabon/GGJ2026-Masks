@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6514801834756780092}
   - component: {fileID: 3316824256948102870}
   - component: {fileID: 6138949064802838500}
+  - component: {fileID: 12948488703911925}
+  - component: {fileID: 3926541758241369291}
   m_Layer: 0
   m_Name: Human
   m_TagString: Untagged
@@ -157,6 +159,38 @@ MonoBehaviour:
   _waddleAngle: 10
   _returnSpeed: 10
   _moveThreshold: 0.1
+--- !u!114 &12948488703911925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907004897916431680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a834a23a4c8443ed985dc5d9dbb2ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Network.ReplicatedPosition
+  _Position: {x: 0, y: 0, z: 0}
+--- !u!114 &3926541758241369291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907004897916431680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 20079665
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 12948488703911925}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &4106124344072602229
 GameObject:
   m_ObjectHideFlags: 0

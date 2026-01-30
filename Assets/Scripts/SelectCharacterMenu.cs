@@ -68,7 +68,7 @@ public class SelectCharacterMenu : MonoBehaviour
 
     void Update()
     {
-        if (_lobbyState == null) return;
+        if (_lobbyState == null || !_lobbyState.Id.IsValid) return;
 
         // Disable when role is taken (network) OR when local player already chose that role (so we don't re-enable before RPC replicates)
         bool godAvailable = _lobbyState.GodPlayer.IsNone && _myChoice != RoleGod;
@@ -199,7 +199,8 @@ public class SelectCharacterMenu : MonoBehaviour
 
     void OnReadyClicked()
     {
-        if (_lobbyState != null && _lobbyState.BothSelected)
+        if (_lobbyState == null || !_lobbyState.Id.IsValid) return;
+        if (_lobbyState.BothSelected)
             onBothSelected?.Invoke();
     }
 }
