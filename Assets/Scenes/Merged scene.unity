@@ -7397,6 +7397,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1140761665 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5473510265595894449, guid: 1e613c5ecf5c94507880750a8ece6eea, type: 3}
+  m_PrefabInstance: {fileID: 1386249925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1163755000
 GameObject:
   m_ObjectHideFlags: 0
@@ -8709,13 +8714,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5473510265595894449, guid: 1e613c5ecf5c94507880750a8ece6eea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1386249933}
   m_SourcePrefab: {fileID: 100100000, guid: 1e613c5ecf5c94507880750a8ece6eea, type: 3}
 --- !u!4 &1386249926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5377763019487177358, guid: 1e613c5ecf5c94507880750a8ece6eea, type: 3}
   m_PrefabInstance: {fileID: 1386249925}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1386249933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140761665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 1259802625
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &1416555501
 GameObject:
   m_ObjectHideFlags: 0
