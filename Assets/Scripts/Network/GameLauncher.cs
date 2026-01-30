@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Network
@@ -39,6 +40,13 @@ namespace Network
         /// <summary>Session/room name used when starting the game. Set before enabling this GameObject if using a menu flow.</summary>
         public string SessionName { get => _sessionName; set => _sessionName = value ?? ""; }
 
+        [Header("Callbacks")]
+        [Tooltip("Invoked when the room is full (e.g. cannot join). Use to show opening menu again and clear input.")]
+        public UnityEvent onFullRoom = new UnityEvent();
+
+        [Tooltip("Invoked when buildIndex is 0 or 1 (e.g. lobby). Use to show select character menu.")]
+        public UnityEvent onSelectCharacter = new UnityEvent();
+
         private NetworkRunner _runner;
 
         private async void Start()
@@ -58,17 +66,22 @@ namespace Network
             // Build NetworkSceneInfo from the active scene's build index.
             var sceneInfo = new NetworkSceneInfo();
             var buildIndex = SceneManager.GetActiveScene().buildIndex;
-            Debug.Log("--------------");
-            Debug.Log(buildIndex);
-            if (buildIndex > 2)
+            
+            if (buildIndex >= 2)
             {
                 Debug.Log("Full room");
+                if (runnerGO != null)
+                    Destroy(runnerGO);
+                onFullRoom?.Invoke();
                 return;
             }
             if (buildIndex >= 0)
             {
                 sceneInfo.AddSceneRef(SceneRef.FromIndex(buildIndex));
             }
+
+            if (buildIndex <= 1)
+                onSelectCharacter?.Invoke();
 
             var result = await _runner.StartGame(new StartGameArgs
             {

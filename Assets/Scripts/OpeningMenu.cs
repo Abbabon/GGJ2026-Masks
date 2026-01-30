@@ -61,4 +61,14 @@ public class OpeningMenu : MonoBehaviour
             startedRoom?.Invoke(roomName);
         }
     }
+
+    /// <summary>Clears the room name input and resets button state. Call when showing the menu again after full room.</summary>
+    public void ClearInput()
+    {
+        if (_input != null)
+        {
+            _input.text = "";
+            RefreshButtonState("");
+        }
+    }
 }
