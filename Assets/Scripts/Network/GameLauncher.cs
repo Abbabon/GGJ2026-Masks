@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Network
@@ -24,8 +25,10 @@ namespace Network
     public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     {
         [Header("Player Setup")]
-        [Tooltip("Prefab with NetworkObject, NetworkTransform, and PlayerController components.")]
+        [Tooltip("Prefab with NetworkObject, NetworkTransform, and PlayerController components. Can be set from GameManager.")]
         [SerializeField] private NetworkPrefabRef _playerPrefab;
+
+        public NetworkPrefabRef PlayerPrefab { get => _playerPrefab; set => _playerPrefab = value; }
 
         [Tooltip("World position where newly joined players spawn.")]
         [SerializeField] private Vector2 _spawnPoint = Vector2.zero;
@@ -34,7 +37,18 @@ namespace Network
         [Tooltip("Photon session/room name. All players must use the same name to connect.")]
         [SerializeField] private string _sessionName = "default-room";
 
+        /// <summary>Session/room name used when starting the game. Set before enabling this GameObject if using a menu flow.</summary>
+        public string SessionName { get => _sessionName; set => _sessionName = value ?? ""; }
+
+        [Header("Callbacks")]
+        [Tooltip("Invoked when the room is full (e.g. cannot join). Use to show opening menu again and clear input.")]
+        public UnityEvent onFullRoom = new UnityEvent();
+
+        [Tooltip("Invoked when buildIndex is 0 or 1 (e.g. lobby). Use to show select character menu.")]
+        public UnityEvent onSelectCharacter = new UnityEvent();
+
         private NetworkRunner _runner;
+        private bool _playerSpawned;
 
         private async void Start()
         {
@@ -53,6 +67,15 @@ namespace Network
             // Build NetworkSceneInfo from the active scene's build index.
             var sceneInfo = new NetworkSceneInfo();
             var buildIndex = SceneManager.GetActiveScene().buildIndex;
+            
+            if (buildIndex >= 2)
+            {
+                Debug.Log("Full room");
+                if (runnerGO != null)
+                    Destroy(runnerGO);
+                onFullRoom?.Invoke();
+                return;
+            }
             if (buildIndex >= 0)
             {
                 sceneInfo.AddSceneRef(SceneRef.FromIndex(buildIndex));
@@ -69,11 +92,57 @@ namespace Network
             if (result.Ok)
             {
                 Debug.Log($"[GameLauncher] Fusion started. Mode: {_runner.GameMode}");
+                if (buildIndex <= 1)
+                    onSelectCharacter?.Invoke();
             }
             else
             {
                 Debug.LogError($"[GameLauncher] Fusion failed to start: {result.ShutdownReason}");
             }
+        }
+
+        private void Update()
+        {
+            // When lobby signals game start, spawn local player (both peers see GameStarted after replication).
+            if (_runner != null && !_playerSpawned)
+                TrySpawnPlayerFromLobby();
+        }
+
+        /// <summary>
+        /// Called when user clicks Start in the select character menu. Triggers RPC so both peers spawn.
+        /// </summary>
+        public void NotifyStartGame()
+        {
+            var lobby = UnityEngine.Object.FindObjectOfType<LobbyState>();
+            if (lobby == null || !lobby.Id.IsValid) return;
+            if (!lobby.BothSelected) return;
+            lobby.RPC_StartGame();
+            TrySpawnPlayerFromLobby();
+        }
+
+        private void TrySpawnPlayerFromLobby()
+        {
+            if (_runner == null || _playerSpawned || !_playerPrefab.IsValid) return;
+
+            var lobby = UnityEngine.Object.FindObjectOfType<LobbyState>();
+            if (lobby == null || !lobby.Id.IsValid) return;
+            if (!lobby.GameStarted) return;
+
+            var local = _runner.LocalPlayer;
+            if (lobby.GodPlayer != local && lobby.HumanPlayer != local) return;
+
+            byte role = lobby.GodPlayer == local ? PlayerController.RoleGod : PlayerController.RoleHuman;
+            Vector3 spawnPos = new Vector3(_spawnPoint.x, _spawnPoint.y, 0f);
+            NetworkObject playerObject = _runner.Spawn(_playerPrefab, spawnPos, Quaternion.identity, local);
+            var pc = playerObject.GetComponent<PlayerController>();
+            if (pc != null)
+                pc.Role = role;
+            _runner.SetPlayerObject(local, playerObject);
+            _playerSpawned = true;
+            // Hide select character menu on this client so both clients see the game start (clicker hides in GameManager.OnStartGame; other peer hides here).
+            var menu = UnityEngine.Object.FindObjectOfType<SelectCharacterMenu>();
+            if (menu != null) menu.gameObject.SetActive(false);
+            Debug.Log($"[GameLauncher] Spawned local player as {(role == PlayerController.RoleGod ? "God" : "Human")}");
         }
 
         // =========================================================================
@@ -82,18 +151,7 @@ namespace Network
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            // In Shared Mode, each peer spawns their own player object.
-            if (player != runner.LocalPlayer) return;
-
-            Vector3 spawnPos = new Vector3(_spawnPoint.x, _spawnPoint.y, 0f);
-            NetworkObject playerObject = runner.Spawn(
-                _playerPrefab,
-                spawnPos,
-                Quaternion.identity,
-                player // this peer gets StateAuthority over its own object
-            );
-            runner.SetPlayerObject(player, playerObject);
-            Debug.Log($"[GameLauncher] Spawned local player for {player}");
+            // Players are spawned when Start is clicked in select character menu (NotifyStartGame / TrySpawnPlayerFromLobby).
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
