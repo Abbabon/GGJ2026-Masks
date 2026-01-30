@@ -139,6 +139,9 @@ namespace Network
                 pc.Role = role;
             _runner.SetPlayerObject(local, playerObject);
             _playerSpawned = true;
+            // Hide select character menu on this client so both clients see the game start (clicker hides in GameManager.OnStartGame; other peer hides here).
+            var menu = UnityEngine.Object.FindObjectOfType<SelectCharacterMenu>();
+            if (menu != null) menu.gameObject.SetActive(false);
             Debug.Log($"[GameLauncher] Spawned local player as {(role == PlayerController.RoleGod ? "God" : "Human")}");
         }
 
