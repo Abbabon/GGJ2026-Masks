@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     [SerializeField] KeyCode actionKey = KeyCode.E;
     [Tooltip("Input in this direction is ignored after hitting a trigger until player chooses another direction.")]
     [SerializeField] float blockedDirectionDotThreshold = 0.7f;
+    [SerializeField] GameObject pointOfInterestPrefab;
+    [SerializeField] GameObject godPositionPrefab;
+
     Mover mover;
     Actionable actionable;
     bool actionPressedLastFrame;
@@ -32,6 +35,39 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
         _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
+
+        if (godPositionPrefab != null) {
+            var godPositions = FindObjectsOfType<GodPosition>();
+            foreach (var godPosition in godPositions)
+            {
+                var indicator = Instantiate(godPositionPrefab, transform.position, Quaternion.identity);
+
+                // Using combined TargetIndicator script
+                var targetInd = indicator.GetComponent<GodMode.TargetIndicator>();
+                if (targetInd != null)
+                {
+                    targetInd.Source = this.transform;
+                    targetInd.Target = godPosition.transform;
+                }
+            }
+        }
+
+        if (pointOfInterestPrefab != null)
+        {
+            var pois = FindObjectsOfType<PointsOfInterest>();
+            foreach (var poi in pois)
+            {
+                var indicator = Instantiate(pointOfInterestPrefab, transform.position, Quaternion.identity);
+
+                // Using combined TargetIndicator script
+                var targetInd = indicator.GetComponent<GodMode.TargetIndicator>();
+                if (targetInd != null)
+                {
+                    targetInd.Source = this.transform;
+                    targetInd.Target = poi.transform;
+                }
+            }
+        }
     }
 
     /// <summary>True if we should control this character locally (input + Mover). No PlayerController — uses LobbyState + StateAuthority only.</summary>
@@ -47,8 +83,10 @@ public class Player : MonoBehaviour
         // No NetworkObject: treat as local (e.g. non-networked prefab).
         if (_networkObject == null || !_networkObject.Id.IsValid)
             return true;
-        // We are the local Human if we're the Human player AND we have state authority over this object (we spawned it).
-        return _lobbyState.HumanPlayer == _runner.LocalPlayer && _networkObject.StateAuthority == _runner.LocalPlayer;
+        // We have state authority over this object only when we spawned it (our own character). We're the Human when we're not the God.
+        if (_networkObject.StateAuthority != _runner.LocalPlayer)
+            return false;
+        return _lobbyState.GodPlayer != _runner.LocalPlayer;
     }
 
     /// <summary>True if this object is the Human's object (apply shared position from network when we're not the local Human).</summary>
