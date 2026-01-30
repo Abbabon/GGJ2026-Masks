@@ -53,7 +53,7 @@ namespace GodMode
             }
 
             // 2. Smooth Move towards the target position
-            Vector3 smoothedPos = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime / _smoothTime);
+            Vector3 smoothedPos = _targetPosition;//Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime / _smoothTime);
 
             // 3. Clamp to World Bounds
             if (_boundarySprite != null)
