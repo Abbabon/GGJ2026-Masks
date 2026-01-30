@@ -1,34 +1,39 @@
+using Fusion;
+using Network;
 using UnityEngine;
 
 namespace GodMode
 {
     /// <summary>
-    /// Handles the God character movement:
-    /// 1. A direct "Cursor" visual that stays exactly on the mouse.
-    /// 2. A "Mask/Iris" visual that smoothly follows the mouse.
+    /// Handles the God cursor:
+    /// - If local player is God (LobbyState.GodPlayer): drive from mouse and replicate position via the God player's PlayerController.GodCursorWorldPosition.
+    /// - Otherwise: read God cursor position from the God player's networked object and drive visuals from that.
     /// </summary>
     public class GodCursor : MonoBehaviour
     {
         [Header("References")]
-        [Tooltip("The visual that snaps directly to the mouse (e.g., a crosshair).")]
+        [Tooltip("The visual that snaps directly to the cursor (e.g., a crosshair).")]
         public Transform CursorVisual;
 
-        [Tooltip("The mask/iris that drags behind deeply.")]
+        [Tooltip("The mask/iris that drags behind.")]
         public Transform IrisVisual;
 
         [Header("Settings")]
-        [Tooltip("Time to reach the target (smooth damp).")]
-        [SerializeField] private float _smoothTime = 0.3f; // Slower for "drag" feel
+        [Tooltip("Time to reach the target (smooth damp) for iris and for remote cursor.")]
+        [SerializeField] private float _smoothTime = 0.3f;
 
         [Tooltip("Maximum speed of the iris.")]
         [SerializeField] private float _maxSpeed = 20f;
 
         private Vector3 _currentVelocity;
         private Camera _mainCamera;
+        private NetworkRunner _runner;
+        private LobbyState _lobbyState;
 
         private void Start()
         {
             _mainCamera = Camera.main;
+            _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
             if (CursorVisual) CursorVisual.position = GetWorldMousePosition();
             if (IrisVisual) IrisVisual.position = GetWorldMousePosition();
         }
@@ -38,22 +43,44 @@ namespace GodMode
             if (_mainCamera == null) _mainCamera = Camera.main;
             if (_mainCamera == null) return;
 
-            Vector3 targetPos = GetWorldMousePosition();
+            if (_runner == null) _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
+            if (_runner == null) return;
 
-            // 1. Direct Visual
-            if (CursorVisual)
+            if (_lobbyState == null) _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
+            if (_lobbyState == null || !_lobbyState.Id.IsValid || !_lobbyState.GameStarted) return;
+
+            bool isGod = _lobbyState.GodPlayer == _runner.LocalPlayer;
+            Vector3 targetPos;
+
+            if (isGod)
             {
-                CursorVisual.position = new Vector3(targetPos.x, targetPos.y, CursorVisual.position.z);
+                targetPos = GetWorldMousePosition();
+                // Replicate to other clients via our player object (we have state authority).
+                if (_runner.TryGetPlayerObject(_runner.LocalPlayer, out var myObject) && myObject.TryGetComponent<PlayerController>(out var pc))
+                    pc.GodCursorWorldPosition = targetPos;
+            }
+            else
+            {
+                // Read from God player's networked position.
+                if (_lobbyState.GodPlayer.IsNone) return;
+                if (!_runner.TryGetPlayerObject(_lobbyState.GodPlayer, out var godObject) || !godObject.TryGetComponent<PlayerController>(out var godPc))
+                    return;
+                targetPos = godPc.GodCursorWorldPosition;
             }
 
-            // 2. Smooth Iris Visual
+            ApplyVisuals(targetPos);
+        }
+
+        private void ApplyVisuals(Vector3 targetPos)
+        {
+            if (CursorVisual)
+                CursorVisual.position = new Vector3(targetPos.x, targetPos.y, CursorVisual.position.z);
+
             if (IrisVisual)
             {
-                // We keep z same as original to avoid sorting issues, or ensure it's set correctly
                 float currentZ = IrisVisual.position.z;
                 Vector3 currentPos = IrisVisual.position;
                 Vector3 targetPos2D = new Vector3(targetPos.x, targetPos.y, currentZ);
-
                 Vector3 newPos = Vector3.SmoothDamp(currentPos, targetPos2D, ref _currentVelocity, _smoothTime, _maxSpeed);
                 IrisVisual.position = newPos;
             }
@@ -62,11 +89,9 @@ namespace GodMode
         private Vector3 GetWorldMousePosition()
         {
             Vector3 mouseScreen = Input.mousePosition;
-            // Distance from camera to z=0 plane.
-            // Assuming 2D game at z=0.
             float distance = -_mainCamera.transform.position.z;
             Vector3 mouseWorld = _mainCamera.ScreenToWorldPoint(new Vector3(mouseScreen.x, mouseScreen.y, distance));
-            mouseWorld.z = 0f; // Force to 2D plane
+            mouseWorld.z = 0f;
             return mouseWorld;
         }
     }

@@ -44,6 +44,11 @@ namespace Network
         /// </summary>
         [Networked] public byte Role { get; set; }
 
+        /// <summary>
+        /// World position of the God cursor (mouse). Written by the God player; replicated to all peers for GodCursor visuals.
+        /// </summary>
+        [Networked] public Vector3 GodCursorWorldPosition { get; set; }
+
         private InputAction _moveAction;
         private byte _lastAppliedRole = byte.MaxValue;
 
@@ -88,6 +93,16 @@ namespace Network
         {
             if (!HasStateAuthority) return;
 
+            // Human movement is driven by Player + Mover (Rigidbody); we only sync transform to network.
+            if (Role == RoleHuman)
+            {
+                NetworkPosition = transform.position;
+                return;
+            }
+
+            // God does not move this character with input.
+            if (Role == RoleGod) return;
+
             Vector2 dir = _moveAction.ReadValue<Vector2>();
             if (dir.sqrMagnitude > 0f)
             {
@@ -97,7 +112,11 @@ namespace Network
 
         public override void Render()
         {
-            // Use Fusion's snapshot interpolation for smooth tick-to-tick blending.
+            // Human movement is driven by Player + Mover (Rigidbody) on the local Human client; don't overwrite.
+            if (Role == RoleHuman && HasStateAuthority)
+                return;
+
+            // Use Fusion's snapshot interpolation for smooth tick-to-tick blending (proxies and non-Human).
             var interpolator = new NetworkBehaviourBufferInterpolator(this);
             if (interpolator)
             {

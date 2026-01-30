@@ -1,4 +1,6 @@
 using UnityEngine;
+using Fusion;
+using Network;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class Player : MonoBehaviour
     Vector2 lastMoveDirection;
     Vector2? excludedDirection;
 
+    NetworkRunner _runner;
+    LobbyState _lobbyState;
+    NetworkObject _networkObject;
+
     void Start()
     {
         mover = GetComponent<Mover>();
@@ -18,6 +24,23 @@ public class Player : MonoBehaviour
 
         actionable = GetComponent<Actionable>();
         if (actionable == null) actionable = GetComponentInChildren<Actionable>();
+
+        _networkObject = GetComponent<NetworkObject>();
+        _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
+        _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
+    }
+
+    /// <summary>True if this object is the local Human (we control it and replicate to network).</summary>
+    bool IsLocalHuman()
+    {
+        if (_runner == null) _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
+        if (_lobbyState == null) _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
+        if (_networkObject == null) _networkObject = GetComponent<NetworkObject>();
+        if (_runner == null || _lobbyState == null || _networkObject == null || !_lobbyState.Id.IsValid || !_lobbyState.GameStarted)
+            return false;
+        if (_lobbyState.HumanPlayer != _runner.LocalPlayer) return false;
+        if (!_runner.TryGetPlayerObject(_runner.LocalPlayer, out var myObj) || myObj != _networkObject) return false;
+        return true;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -29,6 +52,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // Only drive Mover when we are the local Human; otherwise transform comes from PlayerController.Render().
+        if (!IsLocalHuman())
+            return;
+
         if (mover != null)
         {
             float h = Input.GetAxisRaw("Horizontal");
