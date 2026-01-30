@@ -13,7 +13,7 @@ public class Npc : MonoBehaviour
     [SerializeField] float idleTimeoutSeconds = 1f;
     [SerializeField] float idleTimeoutVariance = 0.5f;
 
-    Human human;
+    Mover mover;
     float moveTimer;
     float idleTimer;
     bool isIdle;
@@ -22,21 +22,21 @@ public class Npc : MonoBehaviour
 
     void Start()
     {
-        human = GetComponent<Human>();
-        if (human == null)
-            human = GetComponentInChildren<Human>();
+        mover = GetComponent<Mover>();
+        if (mover == null)
+            mover = GetComponentInChildren<Mover>();
 
-        if (human == null) return;
+        if (mover == null) return;
 
-        float baseSpeed = human.Speed;
-        human.Speed = baseSpeed + Random.Range(-speedVariance, speedVariance);
+        float baseSpeed = mover.Speed;
+        mover.Speed = baseSpeed + Random.Range(-speedVariance, speedVariance);
 
         StartIdle();
     }
 
     void Update()
     {
-        if (human == null) return;
+        if (mover == null) return;
 
         if (isIdle)
         {
@@ -49,7 +49,7 @@ public class Npc : MonoBehaviour
             moveTimer -= Time.deltaTime;
             if (moveTimer <= 0f)
             {
-                human.Stop();
+                mover.Stop();
                 StartIdle();
             }
         }
@@ -57,9 +57,9 @@ public class Npc : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (human == null) return;
+        if (mover == null) return;
 
-        human.Stop();
+        mover.Stop();
         excludedDirection = lastMoveDirection; // don't pick this direction again
         StartIdle();
     }
@@ -73,33 +73,47 @@ public class Npc : MonoBehaviour
 
     void StartRandomMove()
     {
-        if (human == null) return;
+        if (mover == null) return;
 
         isIdle = false;
         Vector2 dir = PickDirectionExcluding(excludedDirection);
         excludedDirection = null;
         lastMoveDirection = dir;
-        human.Move(dir);
+        mover.Move(dir);
 
         float duration = moveDurationSeconds + Random.Range(-moveDurationVariance, moveDurationVariance);
         moveTimer = Mathf.Max(0.01f, duration);
     }
 
+    // 8 directions at 45° intervals (right, up-right, up, up-left, left, down-left, down, down-right)
+    static readonly Vector2[] Directions45 = new Vector2[]
+    {
+        new Vector2(1f, 0f), new Vector2(0.707f, 0.707f), new Vector2(0f, 1f), new Vector2(-0.707f, 0.707f),
+        new Vector2(-1f, 0f), new Vector2(-0.707f, -0.707f), new Vector2(0f, -1f), new Vector2(0.707f, -0.707f)
+    };
+
     Vector2 PickDirectionExcluding(Vector2? exclude)
     {
-        float angleDeg;
         if (exclude == null)
+            return Directions45[Random.Range(0, Directions45.Length)];
+
+        Vector2 ex = exclude.Value.normalized;
+        int excludeIndex = 0;
+        float bestDot = Vector2.Dot(Directions45[0], ex);
+        for (int i = 1; i < Directions45.Length; i++)
         {
-            angleDeg = Random.Range(0f, 360f);
+            float d = Vector2.Dot(Directions45[i], ex);
+            if (d > bestDot) { bestDot = d; excludeIndex = i; }
         }
-        else
+
+        int count = Directions45.Length - 1;
+        int pick = Random.Range(0, count);
+        for (int i = 0; i < Directions45.Length; i++)
         {
-            Vector2 ex = exclude.Value.normalized;
-            float hitAngleDeg = Mathf.Atan2(ex.y, ex.x) * Mathf.Rad2Deg;
-            // Pick an angle at least 90° away from the hit direction (go sideways or opposite)
-            angleDeg = hitAngleDeg + 90f + Random.Range(0f, 180f);
+            if (i == excludeIndex) continue;
+            if (pick == 0) return Directions45[i];
+            pick--;
         }
-        float angleRad = angleDeg * Mathf.Deg2Rad;
-        return new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
+        return Directions45[0];
     }
 }

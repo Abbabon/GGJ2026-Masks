@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3392698123584894683}
   - component: {fileID: 7557109807098342437}
-  - component: {fileID: 711603599425306621}
   - component: {fileID: 9066300900820559289}
   - component: {fileID: 5017588554616331498}
   - component: {fileID: 3467271434378430504}
+  - component: {fileID: 5902709656055733118}
   m_Layer: 0
   m_Name: Human
   m_TagString: Untagged
@@ -95,23 +95,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &711603599425306621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 907004897916431680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eb498637b57c4c3aa3a01ad0791f566, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Human
-  defaultSpeed: 5
-  actionDurationSeconds: 1
-  onActionComplete:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &9066300900820559289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,3 +185,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5902709656055733118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907004897916431680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0b0dbd7a8fc4697be205d65f451103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mover
+  defaultSpeed: 5
