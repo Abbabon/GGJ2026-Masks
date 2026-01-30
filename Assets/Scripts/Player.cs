@@ -83,8 +83,10 @@ public class Player : MonoBehaviour
         // No NetworkObject: treat as local (e.g. non-networked prefab).
         if (_networkObject == null || !_networkObject.Id.IsValid)
             return true;
-        // We are the local Human if we're the Human player AND we have state authority over this object (we spawned it).
-        return _lobbyState.HumanPlayer == _runner.LocalPlayer && _networkObject.StateAuthority == _runner.LocalPlayer;
+        // We have state authority over this object only when we spawned it (our own character). We're the Human when we're not the God.
+        if (_networkObject.StateAuthority != _runner.LocalPlayer)
+            return false;
+        return _lobbyState.GodPlayer != _runner.LocalPlayer;
     }
 
     /// <summary>True if this object is the Human's object (apply shared position from network when we're not the local Human).</summary>
