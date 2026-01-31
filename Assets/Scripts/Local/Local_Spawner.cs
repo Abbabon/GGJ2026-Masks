@@ -19,7 +19,7 @@ public class Local_Spawner : MonoBehaviour
             GameObject go = Instantiate(prefab, characterContainer);
             Vector2 pos = GetSpriteBounds();
             go.transform.position = pos;
-            go.transform.localScale = Vector3.one * 0.75f;
+            go.transform.localScale = Vector3.one * Local_Game_manager.kCharactersScale;
         }
 
         Destroy(gameObject);

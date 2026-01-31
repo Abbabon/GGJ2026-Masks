@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Local_Game_manager : MonoBehaviour
 {
+    public static float kCharactersScale = 0.75f;
+    
     public enum GameState
     {
         Starting,

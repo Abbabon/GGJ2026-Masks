@@ -8,12 +8,12 @@ public class Local_Player : MonoBehaviour
     private float startTime = 0;
     public float actionDuration = 5;
     Local_Game_manager gameManager;
-
+    
     void Start()
     {
         mover = GetComponent<Local_Mover>();
         gameManager = FindObjectOfType<Local_Game_manager>();
-        transform.localScale = Vector3.one * 0.75f;
+        transform.localScale = Vector3.one * Local_Game_manager.kCharactersScale;
 
         var spawns = FindObjectsByType<PlayerSpawn>(FindObjectsSortMode.None);
         if (spawns.Length > 0)
