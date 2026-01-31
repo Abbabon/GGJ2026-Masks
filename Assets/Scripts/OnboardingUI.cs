@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OnboardingUI : MonoBehaviour
@@ -159,8 +160,7 @@ public class OnboardingUI : MonoBehaviour
 
     void FinishOnboarding()
     {
-        gameObject.SetActive(false);
         onOnboardingComplete?.Invoke();
-        // TODO: start the game via onOnboardingComplete or call your game-start logic here
+        SceneManager.LoadScene("local");
     }
 }

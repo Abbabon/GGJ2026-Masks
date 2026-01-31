@@ -26,27 +26,6 @@ public class Local_Npc : MonoBehaviour
     {
         _mover = GetComponent<Local_Mover>();
         if (_mover != null)
-        {
-            var gameManager = FindFirstObjectByType<Local_Game_manager>();
-            if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.Playing)
-            {
-                StartCoroutine(WanderRoutine());
-            }
-            else
-            {
-                Local_Game_manager.OnGameStart += HandleGameStart;
-            }
-        }
-    }
-
-    void OnDestroy()
-    {
-        Local_Game_manager.OnGameStart -= HandleGameStart;
-    }
-
-    void HandleGameStart()
-    {
-        if (_mover != null) 
             StartCoroutine(WanderRoutine());
     }
 
