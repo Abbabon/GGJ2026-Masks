@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7454920558002582289}
   - component: {fileID: 2111923181551813504}
+  - component: {fileID: 3848672045463506754}
   m_Layer: 0
   m_Name: GodIris_Container
   m_TagString: Untagged
@@ -47,10 +48,25 @@ Animation:
   - {fileID: 7400000, guid: 3b392c92269a6416f9a37b8964cf715c, type: 2}
   - {fileID: 7400000, guid: e65eb6c21bdab4118899492e4c00c43a, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &3848672045463506754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2264548558434424446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8721945c537244a0b92389ff76417bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GodIris
+  _animation: {fileID: 2111923181551813504}
+  _winClip: {fileID: 7400000, guid: e65eb6c21bdab4118899492e4c00c43a, type: 2}
+  _loseClip: {fileID: 7400000, guid: 3b392c92269a6416f9a37b8964cf715c, type: 2}
 --- !u!1001 &5399282115228516673
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8490818457877861997, guid: 3b99f8afbf61547a0b96381d2e29d013, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
