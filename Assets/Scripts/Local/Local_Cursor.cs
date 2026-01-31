@@ -18,5 +18,16 @@ public class Local_Cursor : MonoBehaviour
             target,
             speed * Time.deltaTime
         );
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            var hit = Physics2D.OverlapPoint(target);
+            if (hit != null)
+            {
+                var mover = hit.GetComponent<Local_Mover>();
+                if (mover != null)
+                    mover.OnClicked();
+            }
+        }
     }
 }

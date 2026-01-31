@@ -13,6 +13,11 @@ public class Local_Mover : MonoBehaviour
 
     void OnMouseDown()
     {
+        OnClicked();
+    }
+
+    public void OnClicked()
+    {
         Local_Player player = gameObject.GetComponent<Local_Player>();
         Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
         if (player != null)
@@ -30,12 +35,18 @@ public class Local_Mover : MonoBehaviour
 
     public void Move(Vector2 direction)
     {
-        rb.linearVelocity = direction.normalized * _speed;
+        if (rb != null)
+        {
+            rb.linearVelocity = direction.normalized * _speed;   
+        }
     }
 
     public void Stop()
     {
-        rb.linearVelocity = Vector2.zero;
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;   
+        }
     }
 
    
