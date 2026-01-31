@@ -12,12 +12,41 @@ public class Local_Npc : MonoBehaviour
     [SerializeField] float maxPauseDuration = 2f;
     [SerializeField] [Range(0f, 1f)] float chanceToChangeDirection = 0.5f;
 
+    public bool IsAlive { get; private set; } = true;
+
     Local_Mover _mover;
+
+    public void Kill()
+    {
+        IsAlive = false;
+        gameObject.SetActive(false);
+    }
 
     void Start()
     {
         _mover = GetComponent<Local_Mover>();
         if (_mover != null)
+        {
+            var gameManager = FindFirstObjectByType<Local_Game_manager>();
+            if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.Playing)
+            {
+                StartCoroutine(WanderRoutine());
+            }
+            else
+            {
+                Local_Game_manager.OnGameStart += HandleGameStart;
+            }
+        }
+    }
+
+    void OnDestroy()
+    {
+        Local_Game_manager.OnGameStart -= HandleGameStart;
+    }
+
+    void HandleGameStart()
+    {
+        if (_mover != null) 
             StartCoroutine(WanderRoutine());
     }
 

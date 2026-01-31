@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7660697194742259268, guid: 9d77ca5fad7694fa89b6286fd720fd61, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7660697194742259268, guid: 9d77ca5fad7694fa89b6286fd720fd61, type: 3}
+      propertyPath: m_Color.g
+      value: 0.03058815
+      objectReference: {fileID: 0}
+    - target: {fileID: 7660697194742259268, guid: 9d77ca5fad7694fa89b6286fd720fd61, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -77,3 +89,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d00d8691dbe4fb0bb40630f77bd0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Local_Player
+  actionDuration: 5
