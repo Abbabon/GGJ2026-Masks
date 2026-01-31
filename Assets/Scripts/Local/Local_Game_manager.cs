@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Local_Game_manager : MonoBehaviour
 {
+    
+    public void PoiDestroyed(Local_POI poi)
+    {
+        Debug.Log("A" + poi.name);
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,5 +17,15 @@ public class Local_Game_manager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void HereticKilled()
+    {
+        Debug.Log("Heretic Killed");
+    }
+
+    public void NoneHereticKilled()
+    {
+        Debug.Log("NoneHeretic Killed");
     }
 }
