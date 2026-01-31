@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,6 +6,12 @@ public class Local_POI : MonoBehaviour
 {
     public bool isDestroyed = false;
     public float glowTime = 4;
+    private SpriteRenderer spriteRenderer;
+
+    void Start()
+    {
+        spriteRenderer = transform.Find("PointOfIntrest/Pentagram").GetComponent<SpriteRenderer>();
+    }
 
     public void RunEffect()
     {
@@ -37,12 +44,11 @@ public class Local_POI : MonoBehaviour
 
     IEnumerator GlowEffect(bool keepGlowing = false)
     {
-        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(glowTime);
         if (!keepGlowing)
         {
-            spriteRenderer.color = Color.white;
+            spriteRenderer.color = Color.black;
         }
     }
 }
