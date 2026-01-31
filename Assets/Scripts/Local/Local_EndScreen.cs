@@ -19,6 +19,7 @@ public class Local_EndScreen : MonoBehaviour
 
     void Show()
     {
+        Cursor.visible = true;
         if (canvas != null)
             canvas.enabled = true;
     }
