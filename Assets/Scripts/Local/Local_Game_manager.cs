@@ -73,6 +73,8 @@ public class Local_Game_manager : MonoBehaviour
             if (livingNpcs.Count > 0)
             {
                 var victim = livingNpcs[Random.Range(0, livingNpcs.Count)];
+                int hurtId = Random.Range(1, 5); // 1..4
+                AudioManager.Instance.PlaySFX($"hurt{hurtId}");
                 victim.Kill();
                 // Debug.Log($"Sacrificed NPC: {victim.name}");
             }
