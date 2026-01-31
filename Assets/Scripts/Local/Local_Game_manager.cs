@@ -28,4 +28,9 @@ public class Local_Game_manager : MonoBehaviour
     {
         Debug.Log("NoneHeretic Killed");
     }
+
+    public void SetLeftPOI(int length)
+    {
+        Debug.Log("Left POI" + length);
+    }
 }
