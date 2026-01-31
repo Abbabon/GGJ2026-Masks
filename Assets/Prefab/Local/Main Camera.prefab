@@ -153,6 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sacrificeCount: 20
   timerDuration: 5
+  endScreenDelay: 1.2
+  endScreen: {fileID: 0}
 --- !u!1001 &7898699284012177921
 PrefabInstance:
   m_ObjectHideFlags: 0

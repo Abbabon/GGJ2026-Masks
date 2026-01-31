@@ -51,6 +51,8 @@ public class GameIntroUI : MonoBehaviour
 
     void OnEnable()
     {
+        Cursor.visible = false;
+
         if (!shouldOnboard)
         {
             EnableAll();

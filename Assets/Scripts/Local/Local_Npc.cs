@@ -19,7 +19,8 @@ public class Local_Npc : MonoBehaviour
     public void Kill()
     {
         IsAlive = false;
-        gameObject.SetActive(false);
+        _mover.Kill();
+        // gameObject.SetActive(false);
     }
 
     void Start()

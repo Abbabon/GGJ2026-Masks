@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class Local_Game_manager : MonoBehaviour
@@ -5,7 +6,8 @@ public class Local_Game_manager : MonoBehaviour
     public enum GameState
     {
         Starting,
-        Playing
+        Playing,
+        GameOver
     }
 
     public GameState CurrentState { get; private set; } = GameState.Starting;
@@ -14,6 +16,8 @@ public class Local_Game_manager : MonoBehaviour
 
     [SerializeField] int sacrificeCount = 1;
     [SerializeField] float timerDuration = 10f;
+    [SerializeField] float endScreenDelay = 2f;
+    [SerializeField] Local_EndScreen endScreen;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,7 +74,7 @@ public class Local_Game_manager : MonoBehaviour
             {
                 var victim = livingNpcs[Random.Range(0, livingNpcs.Count)];
                 victim.Kill();
-                Debug.Log($"Sacrificed NPC: {victim.name}");
+                // Debug.Log($"Sacrificed NPC: {victim.name}");
             }
         }
     }
@@ -83,11 +87,32 @@ public class Local_Game_manager : MonoBehaviour
     public void HereticKilled()
     {
         Debug.Log("Heretic Killed");
+        EndGame(godWins: true);
     }
 
     public void NoneHereticKilled()
     {
         Debug.Log("NoneHeretic Killed");
+        EndGame(godWins: false);
+    }
+
+    void EndGame(bool godWins)
+    {
+        if (CurrentState == GameState.GameOver) return;
+        CurrentState = GameState.GameOver;
+        ShowEndScreenAfterDelay(godWins).Forget();
+    }
+
+    async UniTaskVoid ShowEndScreenAfterDelay(bool godWins)
+    {
+        await UniTask.WaitForSeconds(endScreenDelay, cancellationToken: destroyCancellationToken);
+        if (endScreen != null)
+        {
+            if (godWins)
+                endScreen.ShowGodWin();
+            else
+                endScreen.ShowHereticWin();
+        }
     }
 
     public void SetLeftPOI(int length)
