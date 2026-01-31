@@ -184,18 +184,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 7834076225165399387}
     m_Modifications:
     - target: {fileID: 1367687846475712212, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1367687846475712212, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1367687846475712212, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1367687846475712212, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -235,25 +223,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1367687846475712212, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3242394544456556384, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
       propertyPath: m_Name
       value: Aim_Container
-      objectReference: {fileID: 0}
-    - target: {fileID: 5429273012362607853, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5429273012362607853, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5429273012362607853, guid: de75b7608b1714a84ad2abfd7b2bb849, type: 3}
-      propertyPath: m_Color.r
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
