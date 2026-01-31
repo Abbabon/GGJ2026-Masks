@@ -18,8 +18,20 @@ public class Local_Cursor : MonoBehaviour
 
     void Update()
     {
-        transform.position = cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 target = cam.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = target;
         spriteRenderer.color = color;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            var hit = Physics2D.OverlapPoint(target);
+            if (hit != null)
+            {
+                var mover = hit.GetComponent<Local_Mover>();
+                if (mover != null)
+                    mover.OnClicked();
+            }
+        }
 
         if (Input.GetMouseButton(0))
         {

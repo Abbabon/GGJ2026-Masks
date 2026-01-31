@@ -82,7 +82,7 @@ public class GameIntroUI : MonoBehaviour
     {
         if (godCursor) godCursor.enabled = true;
         if (hereticPlayer) hereticPlayer.enabled = true;
-        if (playerObject) playerObject.enabled = true;
+        if (playerObject) playerObject.gameObject.SetActive(true);
         if (npcSpawner) npcSpawner.enabled = true;
         if (gameManager) gameManager.enabled = true;
     }
@@ -90,7 +90,7 @@ public class GameIntroUI : MonoBehaviour
     async UniTaskVoid RunIntro(CancellationToken ct)
     {
         DisableAllInput();
-        if (playerObject) playerObject.enabled = false;
+        if (playerObject) playerObject.gameObject.SetActive(false);
         if (npcSpawner) npcSpawner.enabled = false;
         if (gameManager) gameManager.enabled = false;
 
@@ -106,8 +106,8 @@ public class GameIntroUI : MonoBehaviour
             if (hereticPlayer) hereticPlayer.enabled = screen.enableHereticInput;
 
             // Enable player if marked
-            if (screen.spawnPlayer && playerObject && !playerObject.enabled)
-                playerObject.enabled = true;
+            if (screen.spawnPlayer && playerObject && !playerObject.gameObject.activeSelf)
+                playerObject.gameObject.SetActive(true);
 
             // Enable NPC spawner if marked (Local_Spawner.Start fires when first enabled)
             if (screen.spawnNPCs)

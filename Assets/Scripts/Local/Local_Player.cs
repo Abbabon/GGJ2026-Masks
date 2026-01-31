@@ -16,12 +16,15 @@ public class Local_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        mover.Move(direction);
-        if (_nearPOI != null && Time.time - startTime > actionDuration)
+        if (mover != null)
         {
-            _nearPOI.RunEffect();
-            _nearPOI = null;
+            Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            mover.Move(direction);
+            if (_nearPOI != null && Time.time - startTime > actionDuration)
+            {
+                _nearPOI.RunEffect();
+                _nearPOI = null;
+            }   
         }
     }
 
