@@ -13,6 +13,7 @@ public class Local_Game_manager : MonoBehaviour
     public static event System.Action OnGameStart;
 
     [SerializeField] int sacrificeCount = 1;
+    [SerializeField] float timerDuration = 10f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,7 +34,7 @@ public class Local_Game_manager : MonoBehaviour
                 if (timer != null)
                 {
                     timer.OnStateChanged += HandleTimerStateChanged;
-                    timer.StartTimer();
+                    timer.StartTimer(timerDuration);
                 }
 
                 OnGameStart?.Invoke();
