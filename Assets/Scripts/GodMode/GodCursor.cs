@@ -1,5 +1,5 @@
 using Fusion;
-using Network;
+// using Network;
 using UnityEngine;
 
 namespace GodMode
@@ -28,7 +28,7 @@ namespace GodMode
         private Vector3 _currentVelocity;
         private Camera _mainCamera;
         private NetworkRunner _runner;
-        private LobbyState _lobbyState;
+        // private LobbyState _lobbyState;
 
         private void Start()
         {
@@ -40,33 +40,33 @@ namespace GodMode
 
         private void Update()
         {
-            if (_mainCamera == null) _mainCamera = Camera.main;
-            if (_mainCamera == null) return;
+            // if (_mainCamera == null) _mainCamera = Camera.main;
+            // if (_mainCamera == null) return;
 
-            if (_runner == null) _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
-            if (_runner == null) return;
+            // if (_runner == null) _runner = UnityEngine.Object.FindObjectOfType<NetworkRunner>();
+            // if (_runner == null) return;
 
-            if (_lobbyState == null) _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
-            if (_lobbyState == null || !_lobbyState.Id.IsValid || !_lobbyState.GameStarted) return;
-
-            bool isGod = _lobbyState.GodPlayer == _runner.LocalPlayer;
+            // if (_lobbyState == null) _lobbyState = UnityEngine.Object.FindObjectOfType<LobbyState>();
+            // if (_lobbyState == null || !_lobbyState.Id.IsValid || !_lobbyState.GameStarted) return;
+            //
+            // bool isGod = _lobbyState.GodPlayer == _runner.LocalPlayer;
             Vector3 targetPos;
 
-            if (isGod)
-            {
+            // if (isGod)
+            // {
                 targetPos = GetWorldMousePosition();
                 // Replicate to other clients via our player object (we have state authority).
-                if (_runner.TryGetPlayerObject(_runner.LocalPlayer, out var myObject) && myObject.TryGetComponent<PlayerController>(out var pc))
-                    pc.GodCursorWorldPosition = targetPos;
-            }
-            else
-            {
-                // Read from God player's networked position.
-                if (_lobbyState.GodPlayer.IsNone) return;
-                if (!_runner.TryGetPlayerObject(_lobbyState.GodPlayer, out var godObject) || !godObject.TryGetComponent<PlayerController>(out var godPc))
-                    return;
-                targetPos = godPc.GodCursorWorldPosition;
-            }
+                // if (_runner.TryGetPlayerObject(_runner.LocalPlayer, out var myObject) && myObject.TryGetComponent<PlayerController>(out var pc))
+                // pc.GodCursorWorldPosition = targetPos;
+            // }
+            // else
+            // {
+            //     // Read from God player's networked position.
+            //     if (_lobbyState.GodPlayer.IsNone) return;
+            //     if (!_runner.TryGetPlayerObject(_lobbyState.GodPlayer, out var godObject) || !godObject.TryGetComponent<PlayerController>(out var godPc))
+            //         return;
+            //     targetPos = godPc.GodCursorWorldPosition;
+            // }
 
             ApplyVisuals(targetPos);
         }
