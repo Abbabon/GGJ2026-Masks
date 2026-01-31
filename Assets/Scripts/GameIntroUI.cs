@@ -110,8 +110,14 @@ public class GameIntroUI : MonoBehaviour
                 playerObject.enabled = true;
 
             // Enable NPC spawner if marked (Local_Spawner.Start fires when first enabled)
-            if (screen.spawnNPCs && npcSpawner && !npcSpawner.enabled)
-                npcSpawner.enabled = true;
+            if (screen.spawnNPCs)
+            {
+                if (npcSpawner && !npcSpawner.enabled)
+                    npcSpawner.enabled = true;
+
+                // Let the heretic move once NPCs are in the world
+                if (hereticPlayer) hereticPlayer.enabled = true;
+            }
 
             // Fade in
             screen.canvasGroup.gameObject.SetActive(true);
