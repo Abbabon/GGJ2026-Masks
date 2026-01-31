@@ -39,7 +39,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3924513130930575558}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -215,4 +215,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95712f8e03deca84eaa03f48830793bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSorting
-  sortingLine: {fileID: 7252645517309498440}
