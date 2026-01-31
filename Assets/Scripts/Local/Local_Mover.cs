@@ -14,14 +14,10 @@ public class Local_Mover : MonoBehaviour
         animator = transform.Find("Anim").GetComponent<Animator>();
     }
 
-    void OnMouseDown()
-    {
-        OnClicked();
-    }
-
-    public void OnClicked()
+    public void Smite()
     {
         Kill();
+        AudioManager.Instance.PlaySFX("god_smite");
     }
 
     public void Kill()
