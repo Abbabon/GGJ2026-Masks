@@ -24,7 +24,7 @@ public class Local_Cursor : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            var hit = Physics2D.OverlapPoint(target);
+            var hit = Physics2D.OverlapPoint(target, LayerMask.GetMask("DynamicObject"));
             if (hit != null)
             {
                 var mover = hit.GetComponent<Local_Mover>();
