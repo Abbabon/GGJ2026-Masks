@@ -34,7 +34,7 @@ public class Local_Cursor : MonoBehaviour
             {
                 var mover = hit.GetComponent<Local_Mover>();
                 if (mover != null)
-                    mover.OnClicked();
+                    mover.Smite();
             }
         }
 
