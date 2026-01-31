@@ -26,7 +26,11 @@ public class Local_Mover : MonoBehaviour
 
         GodIris iris = null;
         if (_godIrisPrefab != null)
+        {
             iris = Instantiate(_godIrisPrefab, transform.position, Quaternion.identity);
+            iris.transform.SetParent(transform);
+            iris.transform.localPosition = new Vector3(0f, 0f, 1f);
+        }
 
         if (player != null)
         {
