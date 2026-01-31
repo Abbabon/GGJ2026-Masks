@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class Local_Cursor : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float speed = 10f;
+    Camera cam;
+
+    void Awake()
     {
-        
+        cam = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Vector2 target = cam.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = Vector2.Lerp(
+            transform.position,
+            target,
+            speed * Time.deltaTime
+        );
     }
 }
