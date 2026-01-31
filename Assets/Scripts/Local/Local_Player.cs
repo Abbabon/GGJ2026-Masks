@@ -6,25 +6,31 @@ public class Local_Player : MonoBehaviour
     Local_Mover mover;
     Local_POI _nearPOI = null;
     private float startTime = 0;
-    public float actionDuration = 5; 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float actionDuration = 5;
+    Local_Game_manager gameManager;
+
     void Start()
     {
         mover = GetComponent<Local_Mover>();
+        gameManager = FindObjectOfType<Local_Game_manager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (mover != null)
+        if (mover == null) return;
+
+        if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.GameOver)
         {
-            Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            mover.Move(direction);
-            if (_nearPOI != null && Time.time - startTime > actionDuration)
-            {
-                _nearPOI.RunEffect();
-                _nearPOI = null;
-            }   
+            mover.Stop();
+            return;
+        }
+
+        Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        mover.Move(direction);
+        if (_nearPOI != null && Time.time - startTime > actionDuration)
+        {
+            _nearPOI.RunEffect();
+            _nearPOI = null;
         }
     }
 

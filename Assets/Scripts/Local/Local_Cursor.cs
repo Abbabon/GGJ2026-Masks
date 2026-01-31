@@ -8,12 +8,14 @@ public class Local_Cursor : MonoBehaviour
     Animation anim;
     Color color;
     SpriteRenderer spriteRenderer;
+    Local_Game_manager gameManager;
 
     void Start()
     {
         cam = Camera.main;
         // anim = transform.Find("Aim_Container").GetComponent<Animation>();
         spriteRenderer = transform.Find("Aim_Container/Aim/Aim_Inner").GetComponent<SpriteRenderer>();
+        gameManager = FindObjectOfType<Local_Game_manager>();
     }
 
     void Update()
@@ -21,6 +23,9 @@ public class Local_Cursor : MonoBehaviour
         Vector2 target = cam.ScreenToWorldPoint(Input.mousePosition);
         transform.position = target;
         spriteRenderer.color = color;
+
+        if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.GameOver)
+            return;
 
         if (Input.GetMouseButtonDown(0))
         {
