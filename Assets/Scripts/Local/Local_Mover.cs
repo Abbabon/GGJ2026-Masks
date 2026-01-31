@@ -16,7 +16,7 @@ public class Local_Mover : MonoBehaviour
 
     public void Smite()
     {
-        Kill();
+        Kill(true);
         AudioManager.Instance.PlaySFX("god_smite");
     }
 
