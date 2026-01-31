@@ -865,6 +865,7 @@ MonoBehaviour:
   hereticPlayer: {fileID: 0}
   playerObject: {fileID: 0}
   npcSpawner: {fileID: 0}
+  gameManager: {fileID: 0}
   fadeDuration: 0.3
   onIntroComplete:
     m_PersistentCalls:

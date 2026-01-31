@@ -206,6 +206,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f5d2c4dc1524c69bf106b640e19abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Local_Cursor
+--- !u!114 &1011210960 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6315672827112289335, guid: b082f851a070b4ac9bea5e3be5f9a891, type: 3}
+  m_PrefabInstance: {fileID: 698741108}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a16ed1a5fa7584a7696ca6643041b89c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1903869336 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8602483162138793103, guid: bdd45dbc54f8549c399074aa69d13d26, type: 3}
@@ -403,6 +414,10 @@ PrefabInstance:
       propertyPath: npcSpawner
       value: 
       objectReference: {fileID: 51583322}
+    - target: {fileID: 7005399800541024841, guid: e2e3e99bbfbf74b9ca67c6abca08be3e, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1011210960}
     - target: {fileID: 7005399800541024841, guid: e2e3e99bbfbf74b9ca67c6abca08be3e, type: 3}
       propertyPath: playerObject
       value: 
