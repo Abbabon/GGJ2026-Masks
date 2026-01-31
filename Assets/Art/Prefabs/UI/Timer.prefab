@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5228127819938356786}
   - component: {fileID: 7851591388072931143}
+  - component: {fileID: 5979118459123026274}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -55,6 +56,23 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &5979118459123026274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339575572969402257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 210da447e6d3c43e09a48fc8e9449210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Local_Timer
+  warningTime: 3
+  waitDuration: 3
+  _animation: {fileID: 0}
+  idleClipName: Timer_Idle
+  warningClipName: Timer_Warning
 --- !u!1 &3626592395258344660
 GameObject:
   m_ObjectHideFlags: 0
