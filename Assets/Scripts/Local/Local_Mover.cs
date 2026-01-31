@@ -6,6 +6,7 @@ public class Local_Mover : MonoBehaviour
     Rigidbody2D rb;
     public float _speed = 1;
     public Animator animator;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +20,11 @@ public class Local_Mover : MonoBehaviour
     }
 
     public void OnClicked()
+    {
+        Kill();
+    }
+
+    public void Kill()
     {
         Local_Player player = gameObject.GetComponent<Local_Player>();
         Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
@@ -44,7 +50,12 @@ public class Local_Mover : MonoBehaviour
 
     private void Update()
     {
-        animator.SetFloat("Speed", rb.linearVelocity.normalized.magnitude);
+        Vector2 linearVelocity = rb.linearVelocity;
+        animator.SetFloat("Speed", linearVelocity.normalized.magnitude);
+        if (linearVelocity.x != 0)
+        {
+            transform.localScale = new Vector3( linearVelocity.x < 0 ? 1:-1, transform.localScale.y, transform.localScale.z);    
+        }
     }
 
     public void Move(Vector2 direction)
