@@ -13,7 +13,19 @@ public class Local_Mover : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("Sprite clicked!");
+        Local_Player player = gameObject.GetComponent<Local_Player>();
+        Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
+        if (player != null)
+        {
+            instance.HereticKilled();
+        }
+        else
+        {
+            Debug.Log("NonHeretic killed");
+            instance.NoneHereticKilled();
+        }
+        // animation?
+        Destroy(gameObject);
     }
 
     public void Move(Vector2 direction)
