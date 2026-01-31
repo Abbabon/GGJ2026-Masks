@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (_openingMenu != null)
-            _openingMenu.startedRoom.AddListener(OnStartedRoom);
+        // if (_openingMenu != null)
+        //     _openingMenu.startedRoom.AddListener(OnStartedRoom);
         // if (_selectCharacterMenu != null)
         //     _selectCharacterMenu.onBothSelected.AddListener(OnStartGame);
     }
@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
         // launcher.onFullRoom.AddListener(() => OnFullRoom(launcher));
         // launcher.onSelectCharacter.AddListener(OnSelectCharacter);
 
-        if (_openingMenu != null)
-            _openingMenu.gameObject.SetActive(false);
+        // if (_openingMenu != null)
+        //     _openingMenu.gameObject.SetActive(false);
     }
 
     void OnSelectCharacter()
@@ -59,4 +59,8 @@ public class GameManager : MonoBehaviour
     //         _openingMenu.ClearInput();
     //     }
     // }
+    public void totemDestoyed(Local_POI poi)
+    {
+        Debug.Log("A" + poi.name);
+    }
 }
