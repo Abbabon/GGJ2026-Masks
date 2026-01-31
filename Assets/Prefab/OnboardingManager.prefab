@@ -839,29 +839,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c95330bff0848aca8367481032613e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameIntroUI
+  shouldOnboard: 1
   screens:
   - canvasGroup: {fileID: 7091136423475120198}
     enableGodInput: 1
     enableHereticInput: 0
-    advanceOnSpace: 0
-    autoAdvanceDelay: 0
+    spawnPlayer: 0
+    spawnNPCs: 0
   - canvasGroup: {fileID: 1359824983986305883}
     enableGodInput: 0
     enableHereticInput: 0
-    advanceOnSpace: 0
-    autoAdvanceDelay: 0
+    spawnPlayer: 0
+    spawnNPCs: 0
   - canvasGroup: {fileID: 5384762886640744010}
     enableGodInput: 0
     enableHereticInput: 1
-    advanceOnSpace: 0
-    autoAdvanceDelay: 0
+    spawnPlayer: 1
+    spawnNPCs: 0
   - canvasGroup: {fileID: 4786822581988881819}
     enableGodInput: 0
     enableHereticInput: 0
-    advanceOnSpace: 0
-    autoAdvanceDelay: 0
+    spawnPlayer: 0
+    spawnNPCs: 1
   godCursor: {fileID: 0}
-  hereticMovement: {fileID: 0}
+  hereticPlayer: {fileID: 0}
+  playerObject: {fileID: 0}
+  npcSpawner: {fileID: 0}
   fadeDuration: 0.3
   onIntroComplete:
     m_PersistentCalls:

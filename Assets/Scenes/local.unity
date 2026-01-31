@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &51583322 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8309675991791679644, guid: bdd45dbc54f8549c399074aa69d13d26, type: 3}
+  m_PrefabInstance: {fileID: 4118898751997224255}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5a6ccf1ebc34b96a27529e99d8dd86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Local_Spawner
 --- !u!1001 &698741108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,6 +195,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b082f851a070b4ac9bea5e3be5f9a891, type: 3}
+--- !u!114 &836118627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6447468234777192329, guid: 6134b96ebb9af4f4a9abe1fd05758dac, type: 3}
+  m_PrefabInstance: {fileID: 7867525739502831434}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f5d2c4dc1524c69bf106b640e19abc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Local_Cursor
+--- !u!114 &1903869336 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8602483162138793103, guid: bdd45dbc54f8549c399074aa69d13d26, type: 3}
+  m_PrefabInstance: {fileID: 4118898751997224255}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d00d8691dbe4fb0bb40630f77bd0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Local_Player
 --- !u!1001 &2914730035206565699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -358,6 +391,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7005399800541024841, guid: e2e3e99bbfbf74b9ca67c6abca08be3e, type: 3}
+      propertyPath: godCursor
+      value: 
+      objectReference: {fileID: 836118627}
+    - target: {fileID: 7005399800541024841, guid: e2e3e99bbfbf74b9ca67c6abca08be3e, type: 3}
+      propertyPath: npcSpawner
+      value: 
+      objectReference: {fileID: 51583322}
+    - target: {fileID: 7005399800541024841, guid: e2e3e99bbfbf74b9ca67c6abca08be3e, type: 3}
+      propertyPath: playerObject
+      value: 
+      objectReference: {fileID: 1903869336}
+    - target: {fileID: 7005399800541024841, guid: e2e3e99bbfbf74b9ca67c6abca08be3e, type: 3}
+      propertyPath: hereticPlayer
+      value: 
+      objectReference: {fileID: 1903869336}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
