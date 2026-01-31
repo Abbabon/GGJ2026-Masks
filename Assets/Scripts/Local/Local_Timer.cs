@@ -103,7 +103,7 @@ public class Local_Timer : MonoBehaviour
             if (_timer <= 0)
             {
                 // Restart cycle
-                StartTimer(_currentDuration);
+                // StartTimer(_currentDuration);
             }
         }
     }

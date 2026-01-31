@@ -52,7 +52,7 @@ public class Local_Game_manager : MonoBehaviour
     {
         if (state == Local_Timer.TimerState.Waiting)
         {
-            KillRandomNpcs();
+            EndGame(godWins: true);
         }
     }
 
@@ -90,13 +90,13 @@ public class Local_Game_manager : MonoBehaviour
     public void HereticKilled()
     {
         Debug.Log("Heretic Killed");
-        //EndGame(godWins: true);
+        EndGame(godWins: true);
     }
 
     public void NoneHereticKilled()
     {
         Debug.Log("NoneHeretic Killed");
-        //EndGame(godWins: false);
+        EndGame(godWins: false);
     }
 
     void EndGame(bool godWins)
