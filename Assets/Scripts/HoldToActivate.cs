@@ -12,8 +12,8 @@ public partial class HoldToActivate : MonoBehaviour
     private bool isPlayerInRange = false;
     private bool isActivated = false;
 
-    void start() {
-        AudioManager.Instance.PlaySFX("god_smite");
+    void Start() {
+        // AudioManager.Instance.PlaySFX("god_smite");
         // AudioManager.Instance.PlayMusic("god_smite");
     }
 
