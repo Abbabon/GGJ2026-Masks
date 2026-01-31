@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using Fusion;
 
-[CustomEditor(typeof(SelectCharacterMenu))]
+
 public class SelectCharacterMenuEditor : UnityEditor.Editor
 {
     const string LobbyStatePrefabObjectProp = "_lobbyStatePrefabObject";
@@ -11,7 +11,7 @@ public class SelectCharacterMenuEditor : UnityEditor.Editor
     {
         DrawDefaultInspector();
 
-        var menu = (SelectCharacterMenu)target;
+        // var menu = (SelectCharacterMenu)target;
         var so = serializedObject;
         var prop = so.FindProperty(LobbyStatePrefabObjectProp);
         if (prop == null) return;
@@ -42,17 +42,6 @@ public class SelectCharacterMenuEditor : UnityEditor.Editor
 
     static NetworkObject FindLobbyStatePrefab()
     {
-        var guids = AssetDatabase.FindAssets("LobbyState t:Prefab");
-        foreach (var g in guids)
-        {
-            var path = AssetDatabase.GUIDToAssetPath(g);
-            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            if (go == null) continue;
-            var no = go.GetComponent<NetworkObject>();
-            var lobby = go.GetComponent<Network.LobbyState>();
-            if (no != null && lobby != null)
-                return no;
-        }
         return null;
     }
 }
