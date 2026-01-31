@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayMusic("main_theme");
         // if (_openingMenu != null)
         //     _openingMenu.startedRoom.AddListener(OnStartedRoom);
         // if (_selectCharacterMenu != null)

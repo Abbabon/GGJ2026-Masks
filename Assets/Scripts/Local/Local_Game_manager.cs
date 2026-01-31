@@ -23,6 +23,7 @@ public class Local_Game_manager : MonoBehaviour
     void Start()
     {
         CurrentState = GameState.Starting;
+        AudioManager.Instance.PlayMusic("main_theme");
     }
 
     // Update is called once per frame
@@ -87,13 +88,13 @@ public class Local_Game_manager : MonoBehaviour
     public void HereticKilled()
     {
         Debug.Log("Heretic Killed");
-        EndGame(godWins: true);
+        //EndGame(godWins: true);
     }
 
     public void NoneHereticKilled()
     {
         Debug.Log("NoneHeretic Killed");
-        EndGame(godWins: false);
+        //EndGame(godWins: false);
     }
 
     void EndGame(bool godWins)
