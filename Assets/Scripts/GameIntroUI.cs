@@ -15,9 +15,9 @@ public class GameIntroUI : MonoBehaviour
         public bool enableGodInput;
         [Tooltip("Enable heretic (keyboard) input while this screen is active.")]
         public bool enableHereticInput;
-        [Tooltip("Wait for Space press to advance. If false, auto-advance after autoAdvanceDelay seconds.")]
-        public bool advanceOnSpace = true;
-        [Tooltip("Seconds before auto-advancing (only used if advanceOnSpace is false).")]
+        [Tooltip("Skip waiting for Space and auto-advance after autoAdvanceDelay seconds.")]
+        public bool autoAdvance;
+        [Tooltip("Seconds before auto-advancing (only used if autoAdvance is true).")]
         public float autoAdvanceDelay = 3f;
     }
 
@@ -78,16 +78,17 @@ public class GameIntroUI : MonoBehaviour
             SetScreenActive(screen, true);
 
             // Wait for advance condition
-            if (screen.advanceOnSpace)
-            {
-                // Skip a frame so the player sees the screen before we start listening
-                await UniTask.Yield(PlayerLoopTiming.Update, ct);
-                await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space), PlayerLoopTiming.Update, ct);
-            }
-            else
+            if (screen.autoAdvance)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(screen.autoAdvanceDelay),
                     DelayType.UnscaledDeltaTime, PlayerLoopTiming.Update, ct);
+            }
+            else
+            {
+                // Wait for space to be released first (in case held from previous screen)
+                await UniTask.WaitWhile(() => Input.GetKey(KeyCode.Space), PlayerLoopTiming.Update, ct);
+                // Then wait for a fresh press
+                await UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Space), PlayerLoopTiming.Update, ct);
             }
 
             // Fade out
