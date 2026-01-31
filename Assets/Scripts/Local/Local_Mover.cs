@@ -6,7 +6,7 @@ public class Local_Mover : MonoBehaviour
     Rigidbody2D rb;
     public float _speed = 1;
     public Animator animator;
-    
+    [SerializeField] private GodIris _godIrisPrefab;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,33 +14,38 @@ public class Local_Mover : MonoBehaviour
         animator = transform.Find("Anim").GetComponent<Animator>();
     }
 
-    void OnMouseDown()
+    public void Smite()
     {
-        OnClicked();
-    }
-
-    public void OnClicked()
-    {
-        Kill(true);
+        Kill();
+        AudioManager.Instance.PlaySFX("god_smite");
     }
 
     public void Kill(bool isFromGod = false)
     {
         Local_Player player = gameObject.GetComponent<Local_Player>();
         Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
+
+        GodIris iris = null;
+        if (_godIrisPrefab != null)
+        {
+            iris = Instantiate(_godIrisPrefab, transform.position, Quaternion.identity);
+        }
+
         if (player != null)
         {
             instance.HereticKilled();
+            if (iris != null) iris.GodWon();
         }
         else
         {
             Debug.Log("NonHeretic killed");
             if (isFromGod) {
                 instance.NoneHereticKilled();
+                if (iris != null) iris.GodLost();
             }
         }
-        // animation?
-        // Destroy(gameObject);
+
+        Stop();
         animator.SetBool("Dead",true);
         Destroy(this);
         Local_Npc npc = gameObject.GetComponent<Local_Npc>();

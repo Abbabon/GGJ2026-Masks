@@ -67,6 +67,7 @@ public class POILogic : MonoBehaviour
         renderer.sortingOrder = 10;
 
         particleEffects.transform.position = transform.position;
+        AudioManager.Instance.PlaySFX("POI_break");
         particleEffects.Play();
 
         // Particles start BEFORE swap

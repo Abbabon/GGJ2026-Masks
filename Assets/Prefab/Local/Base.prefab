@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Local_Mover
   _speed: 4
+  animator: {fileID: 0}
+  _godIrisPrefab: {fileID: 3848672045463506754, guid: af7a648731d6f4aff9e03214c021b900, type: 3}
 --- !u!1 &3451175383555511207
 GameObject:
   m_ObjectHideFlags: 0
