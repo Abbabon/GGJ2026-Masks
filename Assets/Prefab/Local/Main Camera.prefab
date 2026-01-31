@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sacrificeCount: 5
-  timerDuration: 120
+  timerDuration: 200
   endScreenDelay: 2
   endScreen: {fileID: 0}
 --- !u!1001 &7898699284012177921

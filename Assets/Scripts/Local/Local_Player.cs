@@ -46,9 +46,9 @@ public class Local_Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Local_POI poi = other.GetComponent<Local_POI>();
-        if (poi != null && !poi.isDestroyed)
+        Debug.Log("OnTriggerEnter2D Near POI: " + poi.name);
+        if ((_nearPOI == null || _nearPOI.name != poi.name) && poi != null && !poi.isDestroyed)
         {
-            Debug.Log("Near POI: " + poi.name);
             _nearPOI = poi;
             startTime = Time.time;
         }
@@ -58,6 +58,7 @@ public class Local_Player : MonoBehaviour
     {
         if (other.gameObject.CompareTag("POI"))
         {
+            Debug.Log("OnTriggerExit2D Near POI: " + other.name);
             _nearPOI = null;
         }
     }

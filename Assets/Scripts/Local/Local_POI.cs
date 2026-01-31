@@ -5,6 +5,7 @@ using UnityEngine;
 public class Local_POI : MonoBehaviour
 {
     public bool isDestroyed = false;
+    public bool isHereticDidItDone = false;
     public float glowTime = 4;
     private SpriteRenderer spriteRenderer;
 
@@ -15,6 +16,7 @@ public class Local_POI : MonoBehaviour
 
     public void RunEffect()
     {
+        isHereticDidItDone = true;
         StartCoroutine(RunEffectAfterDelay());
     }
 
