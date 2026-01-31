@@ -5,10 +5,12 @@ public class Local_Mover : MonoBehaviour
 {
     Rigidbody2D rb;
     public float _speed = 1;
+    public Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = transform.Find("Anim").GetComponent<Animator>();
     }
 
     void OnMouseDown()
@@ -30,7 +32,19 @@ public class Local_Mover : MonoBehaviour
             instance.NoneHereticKilled();
         }
         // animation?
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        animator.SetBool("Dead",true);
+        Destroy(this);
+        Local_Npc npc = gameObject.GetComponent<Local_Npc>();
+        if (npc != null)
+        {
+            Destroy(npc);
+        }
+    }
+
+    private void Update()
+    {
+        animator.SetFloat("Speed", rb.linearVelocity.normalized.magnitude);
     }
 
     public void Move(Vector2 direction)

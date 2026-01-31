@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8685813849407802815}
   - component: {fileID: 1215712203151747053}
   - component: {fileID: 1600698134146574575}
+  - component: {fileID: 6749637521148501828}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -67,25 +68,18 @@ Transform:
   - {fileID: 8605231284879505235}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &1215712203151747053
-Animation:
+--- !u!95 &6749637521148501828
+Animator:
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4400965357024769911}
   m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: f1f2199eb356142a4bafb8e163ddc46c, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: f1f2199eb356142a4bafb8e163ddc46c, type: 2}
-  - {fileID: 7400000, guid: db92e397222ef43ac8455bf04ef33bc5, type: 2}
-  - {fileID: 7400000, guid: 7eed9d1294f4b45be8ece7c1aeb7cef7, type: 2}
-  - {fileID: 7400000, guid: 7875bb092bc7048f2ad9ec834c106f50, type: 2}
-  - {fileID: 7400000, guid: efd4f55a3ea3c4d38a17ee8e6639c0d1, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 90691e0f86df24e069f7f0aeb2a4ba9e, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_CullingType: 0
 --- !u!114 &1600698134146574575
@@ -100,6 +94,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95712f8e03deca84eaa03f48830793bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSorting
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+
 --- !u!1001 &1635522056127497708
 PrefabInstance:
   m_ObjectHideFlags: 0

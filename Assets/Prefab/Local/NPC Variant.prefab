@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4400965357024769911, guid: e455f64dec4424d6c937ffae9833a074, type: 3}
       propertyPath: m_Name
-      value: Character (1)
+      value: Anim
       objectReference: {fileID: 0}
     - target: {fileID: 8685813849407802815, guid: e455f64dec4424d6c937ffae9833a074, type: 3}
       propertyPath: m_LocalPosition.x
