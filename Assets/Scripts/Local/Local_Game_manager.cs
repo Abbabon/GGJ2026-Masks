@@ -13,7 +13,7 @@ public class Local_Game_manager : MonoBehaviour
     public static event System.Action OnGameStart;
 
     [SerializeField] int sacrificeCount = 1;
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -75,6 +75,21 @@ public class Local_Game_manager : MonoBehaviour
     }
 
     public void TotemDestoyed(Local_POI poi)
+    {
+        Debug.Log("A" + poi.name);
+    }
+
+    public void HereticKilled()
+    {
+        Debug.Log("Heretic Killed");
+    }
+
+    public void NoneHereticKilled()
+    {
+        Debug.Log("NoneHeretic Killed");
+    }
+
+    public void PoiDestroyed(Local_POI poi)
     {
         Debug.Log("A" + poi.name);
     }
