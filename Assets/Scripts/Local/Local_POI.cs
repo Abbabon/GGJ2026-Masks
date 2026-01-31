@@ -17,28 +17,32 @@ public class Local_POI : MonoBehaviour
         Debug.Log("Glowing all POIs" + allPOIs.Length);
         foreach (Local_POI poi in allPOIs)
         {
-            poi.StartGlow();
+            poi.StartGlow(poi == this);
         }
         yield return new WaitForSeconds(glowTime);
         isDestroyed = true;
         Debug.Log(gameObject.name + " is destroyed");
+        GetComponent<POILogic>().TriggerEffect();
         Destroy(this);
         Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
         instance.SetLeftPOI(allPOIs.Length - 1);
     }
 
-    public void StartGlow()
+    public void StartGlow(bool keepGlowing = false)
     {
         // DO ANIMATION HERE
         Debug.Log(gameObject.name);
-        StartCoroutine(GlowEffect());
+        StartCoroutine(GlowEffect(keepGlowing));
     }
 
-    IEnumerator GlowEffect()
+    IEnumerator GlowEffect(bool keepGlowing = false)
     {
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(glowTime);
-        spriteRenderer.color = Color.white;
+        if (!keepGlowing)
+        {
+            spriteRenderer.color = Color.white;
+        }
     }
 }

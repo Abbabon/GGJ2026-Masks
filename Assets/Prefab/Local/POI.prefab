@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7693989912683273293}
   - component: {fileID: 9115188621670155473}
-  - component: {fileID: 5127513764862731286}
   - component: {fileID: 2138012216313546581}
+  - component: {fileID: 5984848782305130044}
+  - component: {fileID: 417792216877775547}
   m_Layer: 0
   m_Name: POI
   m_TagString: POI
@@ -94,8 +95,42 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!58 &5127513764862731286
-CircleCollider2D:
+--- !u!114 &2138012216313546581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803877406254331880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da7a0d591dc84c65babd20ca2703f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Local_POI
+  isDestroyed: 0
+  glowTime: 4
+--- !u!114 &5984848782305130044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803877406254331880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc50786f13c05f43b9eb2d9f7de1c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::POILogic
+  startMode: 0
+  buildingBuilt: {fileID: 6918780860468700359}
+  buildingRuined: {fileID: 3503286701284379011}
+  particleEffects: {fileID: 3908524887940911921}
+  startDelay: 1
+  vfxLeadTime: 0.2
+  swapDelay: 0.4
+  isRuined: 0
+--- !u!61 &417792216877775547
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,21 +163,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
---- !u!114 &2138012216313546581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1803877406254331880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da7a0d591dc84c65babd20ca2703f7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Local_POI
-  isDestroyed: 0
+  m_Offset: {x: -0.06402898, y: -0.55491924}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 3.9453406, y: 3.7319098}
+  m_EdgeRadius: 0
 --- !u!1001 &4372483213200280124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -211,5 +243,20 @@ PrefabInstance:
 --- !u!4 &236230273051746738 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4605331384051444622, guid: a7e70687d5724c54faa8f4dd4678e752, type: 3}
+  m_PrefabInstance: {fileID: 4372483213200280124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3503286701284379011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 878205094696223679, guid: a7e70687d5724c54faa8f4dd4678e752, type: 3}
+  m_PrefabInstance: {fileID: 4372483213200280124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3908524887940911921 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 762217733526165773, guid: a7e70687d5724c54faa8f4dd4678e752, type: 3}
+  m_PrefabInstance: {fileID: 4372483213200280124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6918780860468700359 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6677251488603664123, guid: a7e70687d5724c54faa8f4dd4678e752, type: 3}
   m_PrefabInstance: {fileID: 4372483213200280124}
   m_PrefabAsset: {fileID: 0}
