@@ -61,7 +61,7 @@ public class Local_Mover : MonoBehaviour
         animator.SetFloat("Speed", linearVelocity.normalized.magnitude);
         if (linearVelocity.x != 0)
         {
-            var scale = Vector3.one * Local_Game_manager.kCharactersScale;
+            var scale = Local_Game_manager.kCharactersScale;
             transform.localScale = new Vector3( linearVelocity.x < 0 ? scale: -1*scale, transform.localScale.y, transform.localScale.z);    
         }
     }
