@@ -47,10 +47,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   musicSounds:
-  - name: god_smite
-    clip: {fileID: 8300000, guid: 08d3df308e95fa64491a6019c766111a, type: 3}
-    volume: 1
-    pitch: 0
   - name: god_win
     clip: {fileID: 8300000, guid: 9356447eb011354409e115a7a6250636, type: 3}
     volume: 1
@@ -67,26 +63,6 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 7d68c9f250d8ff74b9d2333f51d4c2e0, type: 3}
     volume: 1
     pitch: 0
-  - name: POI_break
-    clip: {fileID: 8300000, guid: fb6a8f844a51bc845a1d4bb9240613d1, type: 3}
-    volume: 1
-    pitch: 0
-  - name: hurt2
-    clip: {fileID: 8300000, guid: 1bc5d64eb128c104a8382adb043cdb18, type: 3}
-    volume: 1
-    pitch: 0
-  - name: hurt3
-    clip: {fileID: 8300000, guid: 6a717fcba43d05a43bb2beba4d548d44, type: 3}
-    volume: 1
-    pitch: 0
-  - name: hurt4
-    clip: {fileID: 8300000, guid: d461f7cbfd1b37240a81886fead8196a, type: 3}
-    volume: 1
-    pitch: 0
-  - name: hurt1
-    clip: {fileID: 8300000, guid: 17b62d0c931b60c4d96b4ef6056232d1, type: 3}
-    volume: 1
-    pitch: 0.1
   sfxSounds:
   - name: hurt1
     clip: {fileID: 8300000, guid: 17b62d0c931b60c4d96b4ef6056232d1, type: 3}
@@ -102,6 +78,14 @@ MonoBehaviour:
     pitch: 0
   - name: hurt4
     clip: {fileID: 8300000, guid: d461f7cbfd1b37240a81886fead8196a, type: 3}
+    volume: 1
+    pitch: 0
+  - name: god_smite
+    clip: {fileID: 8300000, guid: 08d3df308e95fa64491a6019c766111a, type: 3}
+    volume: 1
+    pitch: 0
+  - name: POI_break
+    clip: {fileID: 8300000, guid: fb6a8f844a51bc845a1d4bb9240613d1, type: 3}
     volume: 1
     pitch: 0
   musicSource: {fileID: 9052167711266291032}
