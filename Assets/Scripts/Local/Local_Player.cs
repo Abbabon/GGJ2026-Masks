@@ -13,6 +13,14 @@ public class Local_Player : MonoBehaviour
     {
         mover = GetComponent<Local_Mover>();
         gameManager = FindObjectOfType<Local_Game_manager>();
+        transform.localScale = Vector3.one * 0.75f;
+
+        var spawns = FindObjectsByType<PlayerSpawn>(FindObjectsSortMode.None);
+        if (spawns.Length > 0)
+        {
+            var spawn = spawns[UnityEngine.Random.Range(0, spawns.Length)];
+            transform.position = spawn.transform.position;
+        }
     }
 
     void Update()
@@ -29,6 +37,7 @@ public class Local_Player : MonoBehaviour
         mover.Move(direction);
         if (_nearPOI != null && Time.time - startTime > actionDuration)
         {
+            Debug.Log("Near POI ended: " + _nearPOI.name);
             _nearPOI.RunEffect();
             _nearPOI = null;
         }
@@ -39,6 +48,7 @@ public class Local_Player : MonoBehaviour
         Local_POI poi = other.GetComponent<Local_POI>();
         if (poi != null && !poi.isDestroyed)
         {
+            Debug.Log("Near POI: " + poi.name);
             _nearPOI = poi;
             startTime = Time.time;
         }

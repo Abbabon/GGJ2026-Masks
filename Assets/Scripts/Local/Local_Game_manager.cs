@@ -118,5 +118,17 @@ public class Local_Game_manager : MonoBehaviour
     public void SetLeftPOI(int length)
     {
         Debug.Log("Left POI" + length);
+        var pois = GameObject.FindObjectsByType<Local_POI>(FindObjectsSortMode.None);
+        int destroyedCount = 0;
+        foreach (var poi in pois)
+        {
+            if (poi.isDestroyed) {
+                destroyedCount++;
+            }
+        }
+        Debug.Log("Left POI" + (length - destroyedCount));
+        if (destroyedCount == 4) {
+            EndGame(godWins: false);
+        }
     }
 }

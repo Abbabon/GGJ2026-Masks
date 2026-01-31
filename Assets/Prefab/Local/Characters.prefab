@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Local_Spawner
   prefab: {fileID: 3196834802475803172, guid: 4d4e8183dc2ff49a6814f5e4707125f5, type: 3}
-  count: 50
+  count: 80
 --- !u!1001 &3368986295914541757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -153,11 +153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7714987221185636718, guid: 92b81b7f3a6c04cc0b846f12cefa4d49, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.31115007
+      value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 7714987221185636718, guid: 92b81b7f3a6c04cc0b846f12cefa4d49, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.63037
+      value: -5.6
       objectReference: {fileID: 0}
     - target: {fileID: 7714987221185636718, guid: 92b81b7f3a6c04cc0b846f12cefa4d49, type: 3}
       propertyPath: m_LocalPosition.z

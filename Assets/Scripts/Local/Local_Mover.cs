@@ -21,10 +21,10 @@ public class Local_Mover : MonoBehaviour
 
     public void OnClicked()
     {
-        Kill();
+        Kill(true);
     }
 
-    public void Kill()
+    public void Kill(bool isFromGod = false)
     {
         Local_Player player = gameObject.GetComponent<Local_Player>();
         Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
@@ -35,7 +35,9 @@ public class Local_Mover : MonoBehaviour
         else
         {
             Debug.Log("NonHeretic killed");
-            instance.NoneHereticKilled();
+            if (isFromGod) {
+                instance.NoneHereticKilled();
+            }
         }
         // animation?
         // Destroy(gameObject);

@@ -32,11 +32,11 @@ public class Local_Npc : MonoBehaviour
 
     IEnumerator WanderRoutine()
     {
+        // Initial delay to desynchronize NPCs
+        yield return new WaitForSeconds(Random.Range(minInitialWait, maxInitialWait));
+
         while (true)
         {
-            // Initial random wait
-            yield return new WaitForSeconds(Random.Range(minInitialWait, maxInitialWait));
-
             // Pick a random direction and move
             Vector2 direction = Random.insideUnitCircle.normalized;
             _mover.Move(direction);
@@ -44,18 +44,19 @@ public class Local_Npc : MonoBehaviour
             // Move for a random duration
             yield return new WaitForSeconds(Random.Range(minMoveDuration, maxMoveDuration));
 
+            // Chance to change direction before stopping
             if (Random.value < chanceToChangeDirection)
             {
-                // Change direction
                 direction = Random.insideUnitCircle.normalized;
                 _mover.Move(direction);
+                
+                // Move for another duration after changing direction
+                yield return new WaitForSeconds(Random.Range(minMoveDuration, maxMoveDuration));
             }
-            else
-            {
-                // Pause (stop, then wait)
-                _mover.Stop();
-                yield return new WaitForSeconds(Random.Range(minPauseDuration, maxPauseDuration));
-            }
+
+            // Always stop and wait after the movement phase
+            _mover.Stop();
+            yield return new WaitForSeconds(Random.Range(minPauseDuration, maxPauseDuration));
         }
     }
 }

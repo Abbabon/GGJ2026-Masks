@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d00d8691dbe4fb0bb40630f77bd0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Local_Player
-  actionDuration: 5
+  actionDuration: 3
 --- !u!114 &7859213190389992635
 MonoBehaviour:
   m_ObjectHideFlags: 0
