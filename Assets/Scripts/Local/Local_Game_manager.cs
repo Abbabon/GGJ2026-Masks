@@ -74,7 +74,7 @@ public class Local_Game_manager : MonoBehaviour
             {
                 var victim = livingNpcs[Random.Range(0, livingNpcs.Count)];
                 victim.Kill();
-                Debug.Log($"Sacrificed NPC: {victim.name}");
+                // Debug.Log($"Sacrificed NPC: {victim.name}");
             }
         }
     }
