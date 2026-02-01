@@ -1,62 +1,65 @@
 using System.Collections;
 using UnityEngine;
 
-public class Local_Npc : MonoBehaviour
+namespace Masks
 {
-    [Header("Timing")]
-    [SerializeField] float minInitialWait = 0.5f;
-    [SerializeField] float maxInitialWait = 2f;
-    [SerializeField] float minMoveDuration = 1f;
-    [SerializeField] float maxMoveDuration = 4f;
-    [SerializeField] float minPauseDuration = 0.5f;
-    [SerializeField] float maxPauseDuration = 2f;
-    [SerializeField] [Range(0f, 1f)] float chanceToChangeDirection = 0.5f;
-
-    public bool IsAlive { get; private set; } = true;
-
-    Local_Mover _mover;
-
-    public void Kill()
+    public class Local_Npc : MonoBehaviour
     {
-        IsAlive = false;
-        _mover.Kill();
-        // gameObject.SetActive(false);
-    }
+        [Header("Timing")]
+        [SerializeField] float minInitialWait = 0.5f;
+        [SerializeField] float maxInitialWait = 2f;
+        [SerializeField] float minMoveDuration = 1f;
+        [SerializeField] float maxMoveDuration = 4f;
+        [SerializeField] float minPauseDuration = 0.5f;
+        [SerializeField] float maxPauseDuration = 2f;
+        [SerializeField] [Range(0f, 1f)] float chanceToChangeDirection = 0.5f;
 
-    void Start()
-    {
-        _mover = GetComponent<Local_Mover>();
-        if (_mover != null)
-            StartCoroutine(WanderRoutine());
-    }
+        public bool IsAlive { get; private set; } = true;
 
-    IEnumerator WanderRoutine()
-    {
-        // Initial delay to desynchronize NPCs
-        yield return new WaitForSeconds(Random.Range(minInitialWait, maxInitialWait));
+        Local_Mover _mover;
 
-        while (true)
+        public void Kill()
         {
-            // Pick a random direction and move
-            Vector2 direction = Random.insideUnitCircle.normalized;
-            _mover.Move(direction);
+            IsAlive = false;
+            _mover.Kill();
+            // gameObject.SetActive(false);
+        }
 
-            // Move for a random duration
-            yield return new WaitForSeconds(Random.Range(minMoveDuration, maxMoveDuration));
+        void Start()
+        {
+            _mover = GetComponent<Local_Mover>();
+            if (_mover != null)
+                StartCoroutine(WanderRoutine());
+        }
 
-            // Chance to change direction before stopping
-            if (Random.value < chanceToChangeDirection)
+        IEnumerator WanderRoutine()
+        {
+            // Initial delay to desynchronize NPCs
+            yield return new WaitForSeconds(Random.Range(minInitialWait, maxInitialWait));
+
+            while (true)
             {
-                direction = Random.insideUnitCircle.normalized;
+                // Pick a random direction and move
+                Vector2 direction = Random.insideUnitCircle.normalized;
                 _mover.Move(direction);
-                
-                // Move for another duration after changing direction
-                yield return new WaitForSeconds(Random.Range(minMoveDuration, maxMoveDuration));
-            }
 
-            // Always stop and wait after the movement phase
-            _mover.Stop();
-            yield return new WaitForSeconds(Random.Range(minPauseDuration, maxPauseDuration));
+                // Move for a random duration
+                yield return new WaitForSeconds(Random.Range(minMoveDuration, maxMoveDuration));
+
+                // Chance to change direction before stopping
+                if (Random.value < chanceToChangeDirection)
+                {
+                    direction = Random.insideUnitCircle.normalized;
+                    _mover.Move(direction);
+
+                    // Move for another duration after changing direction
+                    yield return new WaitForSeconds(Random.Range(minMoveDuration, maxMoveDuration));
+                }
+
+                // Always stop and wait after the movement phase
+                _mover.Stop();
+                yield return new WaitForSeconds(Random.Range(minPauseDuration, maxPauseDuration));
+            }
         }
     }
 }

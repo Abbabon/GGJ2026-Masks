@@ -167,9 +167,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1222583720080593399, guid: 9d77ca5fad7694fa89b6286fd720fd61, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7859213190389992635}
-    - targetCorrespondingSourceObject: {fileID: 1222583720080593399, guid: 9d77ca5fad7694fa89b6286fd720fd61, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3116823749880719827}
   m_SourcePrefab: {fileID: 100100000, guid: 9d77ca5fad7694fa89b6286fd720fd61, type: 3}
 --- !u!1 &3778515060358254527 stripped
 GameObject:
@@ -201,26 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95712f8e03deca84eaa03f48830793bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSorting
---- !u!114 &3116823749880719827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3778515060358254527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bc50786f13c05f43b9eb2d9f7de1c5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::POILogic
-  startMode: 0
-  buildingBuilt: {fileID: 0}
-  buildingRuined: {fileID: 0}
-  particleEffects: {fileID: 0}
-  startDelay: 1
-  vfxLeadTime: 0.2
-  swapDelay: 0.4
-  isRuined: 0
 --- !u!4 &7714987221185636718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5731290154001823526, guid: 9d77ca5fad7694fa89b6286fd720fd61, type: 3}

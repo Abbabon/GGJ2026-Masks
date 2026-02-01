@@ -1,86 +1,89 @@
 using System;
 using UnityEngine;
 
-public class Local_Mover : MonoBehaviour
+namespace Masks
 {
-    Rigidbody2D rb;
-    public float _speed = 1;
-    public Animator animator;
-    [SerializeField] private GodIris _godIrisPrefab;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class Local_Mover : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = transform.Find("Anim").GetComponent<Animator>();
-    }
-
-    public void Smite()
-    {
-        Kill(true);
-        AudioManager.Instance.PlaySFX("god_smite");
-    }
-
-    public void Kill(bool isFromGod = false)
-    {
-        Local_Player player = gameObject.GetComponent<Local_Player>();
-        Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
-
-        GodIris iris = null;
-        if (_godIrisPrefab != null)
+        Rigidbody2D rb;
+        public float _speed = 1;
+        public Animator animator;
+        [SerializeField] private GodIris _godIrisPrefab;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            iris = Instantiate(_godIrisPrefab, transform.position, Quaternion.identity);
+            rb = GetComponent<Rigidbody2D>();
+            animator = transform.Find("Anim").GetComponent<Animator>();
         }
 
-        if (player != null)
+        public void Smite()
         {
-            instance.HereticKilled();
-            if (iris != null) iris.GodWon();
+            Kill(true);
+            AudioManager.Instance.PlaySFX("god_smite");
         }
-        else
+
+        public void Kill(bool isFromGod = false)
         {
-            Debug.Log("NonHeretic killed");
-            if (isFromGod) {
-                instance.NoneHereticKilled();
-                if (iris != null) iris.GodLost();
+            Local_Player player = gameObject.GetComponent<Local_Player>();
+            Local_Game_manager instance = FindObjectOfType<Local_Game_manager>();
+
+            GodIris iris = null;
+            if (_godIrisPrefab != null)
+            {
+                iris = Instantiate(_godIrisPrefab, transform.position, Quaternion.identity);
+            }
+
+            if (player != null)
+            {
+                instance.HereticKilled();
+                if (iris != null) iris.GodWon();
+            }
+            else
+            {
+                Debug.Log("NonHeretic killed");
+                if (isFromGod) {
+                    instance.NoneHereticKilled();
+                    if (iris != null) iris.GodLost();
+                }
+            }
+
+            Stop();
+            animator.SetBool("Dead",true);
+            Destroy(this);
+            Local_Npc npc = gameObject.GetComponent<Local_Npc>();
+            if (npc != null)
+            {
+                Destroy(npc);
             }
         }
 
-        Stop();
-        animator.SetBool("Dead",true);
-        Destroy(this);
-        Local_Npc npc = gameObject.GetComponent<Local_Npc>();
-        if (npc != null)
+        private void Update()
         {
-            Destroy(npc);
+            Vector2 linearVelocity = rb.linearVelocity;
+            animator.SetFloat("Speed", linearVelocity.normalized.magnitude);
+            if (linearVelocity.x != 0)
+            {
+                var scale = Local_Game_manager.kCharactersScale;
+                transform.localScale = new Vector3( linearVelocity.x < 0 ? scale: -1*scale, transform.localScale.y, transform.localScale.z);
+            }
         }
-    }
 
-    private void Update()
-    {
-        Vector2 linearVelocity = rb.linearVelocity;
-        animator.SetFloat("Speed", linearVelocity.normalized.magnitude);
-        if (linearVelocity.x != 0)
+        public void Move(Vector2 direction)
         {
-            var scale = Local_Game_manager.kCharactersScale;
-            transform.localScale = new Vector3( linearVelocity.x < 0 ? scale: -1*scale, transform.localScale.y, transform.localScale.z);    
+            if (rb != null)
+            {
+                rb.linearVelocity = direction.normalized * _speed;
+            }
         }
-    }
 
-    public void Move(Vector2 direction)
-    {
-        if (rb != null)
+        public void Stop()
         {
-            rb.linearVelocity = direction.normalized * _speed;   
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
         }
-    }
 
-    public void Stop()
-    {
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;   
-        }
-    }
 
-   
+    }
 }

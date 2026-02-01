@@ -1,43 +1,46 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Local_EndScreen : MonoBehaviour
+namespace Masks
 {
-    [SerializeField] GameObject hereticWinScreen;
-    [SerializeField] GameObject godWinScreen;
-
-    Canvas canvas;
-
-    void Awake()
+    public class Local_EndScreen : MonoBehaviour
     {
-        canvas = GetComponent<Canvas>();
-        if (canvas != null)
-            canvas.enabled = false;
-        hereticWinScreen.SetActive(false);
-        godWinScreen.SetActive(false);
-    }
+        [SerializeField] GameObject hereticWinScreen;
+        [SerializeField] GameObject godWinScreen;
 
-    void Show()
-    {
-        Cursor.visible = true;
-        if (canvas != null)
-            canvas.enabled = true;
-    }
+        Canvas canvas;
 
-    public void ShowHereticWin()
-    {
-        Show();
-        hereticWinScreen.SetActive(true);
-    }
+        void Awake()
+        {
+            canvas = GetComponent<Canvas>();
+            if (canvas != null)
+                canvas.enabled = false;
+            hereticWinScreen.SetActive(false);
+            godWinScreen.SetActive(false);
+        }
 
-    public void ShowGodWin()
-    {
-        Show();
-        godWinScreen.SetActive(true);
-    }
+        void Show()
+        {
+            Cursor.visible = true;
+            if (canvas != null)
+                canvas.enabled = true;
+        }
 
-    public void Replay()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        public void ShowHereticWin()
+        {
+            Show();
+            hereticWinScreen.SetActive(true);
+        }
+
+        public void ShowGodWin()
+        {
+            Show();
+            godWinScreen.SetActive(true);
+        }
+
+        public void Replay()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }

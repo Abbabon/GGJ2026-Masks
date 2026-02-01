@@ -1,67 +1,70 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Local_Cursor : MonoBehaviour
+namespace Masks
 {
-    public float speed = 10f;
-    Camera cam;
-    Animation anim;
-    Color color;
-    SpriteRenderer spriteRenderer;
-    Local_Game_manager gameManager;
-
-    void Start()
+    public class Local_Cursor : MonoBehaviour
     {
-        cam = Camera.main;
-        // anim = transform.Find("Aim_Container").GetComponent<Animation>();
-        spriteRenderer = transform.Find("Aim_Container/Aim/Aim_Inner").GetComponent<SpriteRenderer>();
-        gameManager = FindObjectOfType<Local_Game_manager>();
-    }
+        public float speed = 10f;
+        Camera cam;
+        Animation anim;
+        Color color;
+        SpriteRenderer spriteRenderer;
+        Local_Game_manager gameManager;
 
-    void Update()
-    {
-        Vector2 target = cam.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = target;
-        spriteRenderer.color = color;
-
-        if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.GameOver)
-            return;
-
-        if (Input.GetMouseButtonDown(0))
+        void Start()
         {
-            var hit = Physics2D.OverlapPoint(target, LayerMask.GetMask("DynamicObject"));
-            if (hit != null)
+            cam = Camera.main;
+            // anim = transform.Find("Aim_Container").GetComponent<Animation>();
+            spriteRenderer = transform.Find("Aim_Container/Aim/Aim_Inner").GetComponent<SpriteRenderer>();
+            gameManager = FindObjectOfType<Local_Game_manager>();
+        }
+
+        void Update()
+        {
+            Vector2 target = cam.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = target;
+            spriteRenderer.color = color;
+
+            if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.GameOver)
+                return;
+
+            if (Input.GetMouseButtonDown(0))
             {
-                var mover = hit.GetComponent<Local_Mover>();
-                if (mover != null)
-                    mover.Smite();
+                var hit = Physics2D.OverlapPoint(target, LayerMask.GetMask("DynamicObject"));
+                if (hit != null)
+                {
+                    var mover = hit.GetComponent<Local_Mover>();
+                    if (mover != null)
+                        mover.Smite();
+                }
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                // anim.Play("God_Aim_Shoot");
+                spriteRenderer.color = Color.red;
             }
         }
 
-        if (Input.GetMouseButton(0))
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            // anim.Play("God_Aim_Shoot");
-            spriteRenderer.color = Color.red;
+            Debug.Log("OnTriggerEnter2D");
+            if (other.gameObject.CompareTag("Character"))
+            {
+                // anim.Play("God_Aim_OnCollide");
+                color = Color.white;
+            }
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("OnTriggerEnter2D");
-        if (other.gameObject.CompareTag("Character"))
+        private void OnTriggerExit2D(Collider2D other)
         {
-            // anim.Play("God_Aim_OnCollide");
-            color = Color.white;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        Debug.Log("OnTriggerExit2D");
-        if (other.gameObject.CompareTag("Character"))
-        {
-            // anim.Play("God_Aim_Idle");
-            color = Color.black;
+            Debug.Log("OnTriggerExit2D");
+            if (other.gameObject.CompareTag("Character"))
+            {
+                // anim.Play("God_Aim_Idle");
+                color = Color.black;
+            }
         }
     }
 }

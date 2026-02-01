@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class PlayerSpawn : MonoBehaviour
+namespace Masks
 {
-    private void OnDrawGizmos()
+    public class PlayerSpawn : MonoBehaviour
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 0.5f);
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 2);
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position, 0.5f);
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 2);
+        }
     }
 }

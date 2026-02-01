@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class ObjectSorting : MonoBehaviour
+namespace Masks
 {
-    void LateUpdate()
+    public class ObjectSorting : MonoBehaviour
     {
-        var spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
-        var sortingLine = transform.Find("sorting_line");
-
-        if (sortingLine == null) return;
-
-        int sortOrder = Mathf.RoundToInt(-sortingLine.position.y * 100);
-
-        foreach (var renderer in spriteRenderers)
+        void LateUpdate()
         {
-            renderer.sortingOrder = sortOrder;
+            var spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+            var sortingLine = transform.Find("sorting_line");
+
+            if (sortingLine == null) return;
+
+            int sortOrder = Mathf.RoundToInt(-sortingLine.position.y * 100);
+
+            foreach (var renderer in spriteRenderers)
+            {
+                renderer.sortingOrder = sortOrder;
+            }
         }
     }
 }

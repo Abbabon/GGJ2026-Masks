@@ -1,65 +1,68 @@
 using System;
 using UnityEngine;
 
-public class Local_Player : MonoBehaviour
+namespace Masks
 {
-    Local_Mover mover;
-    Local_POI _nearPOI = null;
-    private float startTime = 0;
-    public float actionDuration = 5;
-    Local_Game_manager gameManager;
-    
-    void Start()
+    public class Local_Player : MonoBehaviour
     {
-        mover = GetComponent<Local_Mover>();
-        gameManager = FindObjectOfType<Local_Game_manager>();
-        transform.localScale = Vector3.one * Local_Game_manager.kCharactersScale;
+        Local_Mover mover;
+        Local_POI _nearPOI = null;
+        private float startTime = 0;
+        public float actionDuration = 5;
+        Local_Game_manager gameManager;
 
-        var spawns = FindObjectsByType<PlayerSpawn>(FindObjectsSortMode.None);
-        if (spawns.Length > 0)
+        void Start()
         {
-            var spawn = spawns[UnityEngine.Random.Range(0, spawns.Length)];
-            transform.position = spawn.transform.position;
-        }
-    }
+            mover = GetComponent<Local_Mover>();
+            gameManager = FindObjectOfType<Local_Game_manager>();
+            transform.localScale = Vector3.one * Local_Game_manager.kCharactersScale;
 
-    void Update()
-    {
-        if (mover == null) return;
-
-        if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.GameOver)
-        {
-            mover.Stop();
-            return;
+            var spawns = FindObjectsByType<PlayerSpawn>(FindObjectsSortMode.None);
+            if (spawns.Length > 0)
+            {
+                var spawn = spawns[UnityEngine.Random.Range(0, spawns.Length)];
+                transform.position = spawn.transform.position;
+            }
         }
 
-        Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        mover.Move(direction);
-        if (_nearPOI != null && Time.time - startTime > actionDuration)
+        void Update()
         {
-            Debug.Log("Near POI ended: " + _nearPOI.name);
-            _nearPOI.RunEffect();
-            _nearPOI = null;
-        }
-    }
+            if (mover == null) return;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Local_POI poi = other.GetComponent<Local_POI>();
-        Debug.Log("OnTriggerEnter2D Near POI: " + poi.name);
-        if ((_nearPOI == null || _nearPOI.name != poi.name) && poi != null && !poi.isDestroyed)
-        {
-            _nearPOI = poi;
-            startTime = Time.time;
+            if (gameManager != null && gameManager.CurrentState == Local_Game_manager.GameState.GameOver)
+            {
+                mover.Stop();
+                return;
+            }
+
+            Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            mover.Move(direction);
+            if (_nearPOI != null && Time.time - startTime > actionDuration)
+            {
+                Debug.Log("Near POI ended: " + _nearPOI.name);
+                _nearPOI.RunEffect();
+                _nearPOI = null;
+            }
         }
-    }
-    
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("POI"))
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("OnTriggerExit2D Near POI: " + other.name);
-            _nearPOI = null;
+            Local_POI poi = other.GetComponent<Local_POI>();
+            if ((_nearPOI == null || _nearPOI.name != poi.name) && poi != null && !poi.isDestroyed)
+            {
+                Debug.Log("OnTriggerEnter2D Near POI: " + poi.name);
+                _nearPOI = poi;
+                startTime = Time.time;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.gameObject.CompareTag("POI"))
+            {
+                Debug.Log("OnTriggerExit2D Near POI: " + other.name);
+                _nearPOI = null;
+            }
         }
     }
 }

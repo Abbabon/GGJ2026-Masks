@@ -1,83 +1,86 @@
 using UnityEngine;
 using System.Collections;
 
-public class POILogic : MonoBehaviour
+namespace Masks
 {
-    public enum StartMode
+    public class POILogic : MonoBehaviour
     {
-        AutoStart,
-        WaitForTrigger
-    }
+        public enum StartMode
+        {
+            AutoStart,
+            WaitForTrigger
+        }
 
-    [Header("Mode")]
-    [SerializeField] private StartMode startMode = StartMode.AutoStart;
+        [Header("Mode")]
+        [SerializeField] private StartMode startMode = StartMode.AutoStart;
 
-    [Header("Visuals")]
-    [SerializeField] private GameObject buildingBuilt;
-    [SerializeField] private GameObject buildingRuined;
+        [Header("Visuals")]
+        [SerializeField] private GameObject buildingBuilt;
+        [SerializeField] private GameObject buildingRuined;
 
-    [Header("VFX")]
-    [SerializeField] private ParticleSystem particleEffects;
+        [Header("VFX")]
+        [SerializeField] private ParticleSystem particleEffects;
 
-    [Header("Timing")]
-    [SerializeField] private float startDelay = 1f;
-    [SerializeField] private float vfxLeadTime = 0.2f;
-    [SerializeField] private float swapDelay = 0.4f;
+        [Header("Timing")]
+        [SerializeField] private float startDelay = 1f;
+        [SerializeField] private float vfxLeadTime = 0.2f;
+        [SerializeField] private float swapDelay = 0.4f;
 
-    public bool isRuined = false;
-    private bool isTransitioning = false;
+        public bool isRuined = false;
+        private bool isTransitioning = false;
 
-    void Start()
-    {
-        buildingBuilt.SetActive(true);
-        buildingRuined.SetActive(false);
+        void Start()
+        {
+            buildingBuilt.SetActive(true);
+            buildingRuined.SetActive(false);
 
-        // if (startMode == StartMode.AutoStart)
-        // {
-        //     StartCoroutine(AutoStartRoutine());
-        // }
-    }
+            // if (startMode == StartMode.AutoStart)
+            // {
+            //     StartCoroutine(AutoStartRoutine());
+            // }
+        }
 
-    private IEnumerator AutoStartRoutine()
-    {
-        yield return new WaitForSeconds(startDelay);
-        TriggerEffect();
-    }
+        private IEnumerator AutoStartRoutine()
+        {
+            yield return new WaitForSeconds(startDelay);
+            TriggerEffect();
+        }
 
-    /// <summary>
-    /// Public trigger – can be called from UI Button, code, or events
-    /// </summary>
-    public void TriggerEffect()
-    {
-        if (isRuined || isTransitioning)
-            return;
+        /// <summary>
+        /// Public trigger – can be called from UI Button, code, or events
+        /// </summary>
+        public void TriggerEffect()
+        {
+            if (isRuined || isTransitioning)
+                return;
 
-        Debug.unityLogger.Log("Triggering POI effect");
-        StartCoroutine(TransitionRoutine());
-    }
+            Debug.unityLogger.Log("Triggering POI effect");
+            StartCoroutine(TransitionRoutine());
+        }
 
-    private IEnumerator TransitionRoutine()
-    {
-        isTransitioning = true;
+        private IEnumerator TransitionRoutine()
+        {
+            isTransitioning = true;
 
-        // Safety: force particles to render on top
-        var renderer = particleEffects.GetComponent<ParticleSystemRenderer>();
-        Debug.unityLogger.Log("-----");
-        renderer.sortingLayerName = "Characters";
-        renderer.sortingOrder = 10;
+            // Safety: force particles to render on top
+            var renderer = particleEffects.GetComponent<ParticleSystemRenderer>();
+            Debug.unityLogger.Log("-----");
+            renderer.sortingLayerName = "Characters";
+            renderer.sortingOrder = 10;
 
-        particleEffects.transform.position = transform.position;
-        AudioManager.Instance.PlaySFX("POI_break");
-        particleEffects.Play();
+            particleEffects.transform.position = transform.position;
+            AudioManager.Instance.PlaySFX("POI_break");
+            particleEffects.Play();
 
-        // Particles start BEFORE swap
-        yield return new WaitForSeconds(vfxLeadTime);
-        yield return new WaitForSeconds(swapDelay);
+            // Particles start BEFORE swap
+            yield return new WaitForSeconds(vfxLeadTime);
+            yield return new WaitForSeconds(swapDelay);
 
-        buildingBuilt.SetActive(false);
-        buildingRuined.SetActive(true);
+            buildingBuilt.SetActive(false);
+            buildingRuined.SetActive(true);
 
-        isRuined = true;
-        isTransitioning = false;
+            isRuined = true;
+            isTransitioning = false;
+        }
     }
 }
